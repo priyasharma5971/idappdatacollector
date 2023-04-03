@@ -1,0 +1,148 @@
+﻿@model IEnumerable<WebApplication1.Customer>
+
+@{
+    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ 
+    var q= ViewBag.userlist;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table table-responsive  table-bordered table-striped"  >
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EnteredOnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsValid)
+            </th>
+
+
+            <th>
+                @Html.DisplayNameFor(model => model.ValidFrom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValidTill)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.password)
+            </th>
+
+            @*<th>
+            @Html.DisplayNameFor(model => model.UpdatedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdatedBy)
+        </th>*@
+            <th></th>
+        </tr>
+        @if (Model != null)
+        {
+
+            foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @item.EnteredOnDate.ToShortDateString()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsValid)
+            </td>
+
+
+            <td>
+                @item.ValidFrom.ToShortDateString()
+            </td>
+            <td>
+                @item.ValidTill.ToShortDateString()
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.password)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.UpdatedOn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdatedBy)
+        </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }) |
+                @*@Html.ActionLink("Details", "Details", new { id = item.CustomerId }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId }, new { onclick = "return confirm('Are you sure you wish to delete this?');" })
+               @Html.ActionLink("Renew", "Renew", new { id = item.CustomerId }) |
+            </td>
+        </tr>
+            }
+        }
+
+
+       
+    </table>
+    @*<table class="table table-responsive  table-bordered table-striped" >
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Password</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @using (Html.BeginForm())
+                {
+
+                    foreach (var item in q)
+                    {
+                        <td>@item.LoginName</td>
+                        <td><input value="@item.Password" type="password" class="form-control" /></td>
+
+                        <td><button type="submit" formaction="~/Users/cpass?id=@item.UserId&pass=@item.Password">Change Password</button></td>
+                    }
+                }
+            </tr>
+        </tbody>
+    </table>*@
+</body>
+</html>

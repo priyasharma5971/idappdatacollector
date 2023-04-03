@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "ImportExcel";
+    Layout = "~/Views/Shared/Customer.cshtml";
+}
+@model WebApplication1.Student
+<br /><br />
+@using (Html.BeginForm("ImportExcel", "Customers", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal", @id = "demo-bv-wz-form" }))
+{
+
+    @Html.AntiForgeryToken()
+
+
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
+                    Select School
+                    @Html.DropDownList("StSchool_SchoolId", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    Select Session
+                    @Html.DropDownListFor(x => Model.Session, new SelectList(Model.sessionlist, "session", "session"), new { @class = "selectpicker form-control" })
+
+                </div>
+
+                <div class="col-md-2">
+                    Select Batch
+                    <select name="Batch" id="Batch" class="form-control">
+                        <option value="1">Batch1</option>
+                        <option value="2">Batch2</option>
+
+                        <option value="3">Batch3</option>
+                        <option value="4">Batch4</option>
+                        <option value="100">Parent</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="file" class="upload up1 " name="PhotoUpload" id="PhotoUpload" accept="image/jpeg, image/jpg" />
+
+                </div>
+
+                <div class="col-md-2">
+
+                    <button type="submit" class="btn btn-info" formaction="~/Customers/ImportExcel">Import</button>
+                </div>
+
+            </div>
+            <br />
+            <div class="row col-md-12">
+                <h4 style="color:#ff0000">Instruction for Excel Column Name: </h4>
+                <h5 style="color:#ff6a00">
+                    address,admno,Class,dob,Father,Mother,Mobile,StName,Section,photo,rollno,house,
+                    <br />conveyance,stop,driver_name,driver_mobile,designation,res1,res2,emergency_no,bloodgroup
+                </h5>
+            </div>
+            <br />
+        </div>
+
+    </div>
+}
+
+

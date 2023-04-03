@@ -1,0 +1,183 @@
+﻿@model WebApplication1.Student
+
+@{
+    ViewBag.Title = "Details";
+}
+@{
+
+    Layout = "~/Views/Shared/school.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AdmNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdmNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FatherName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FatherName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MotherName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MotherName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Dob)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Dob)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptedConveyance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptedConveyance)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ClassName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ClassName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SectonName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SectonName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Session)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Session)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo)
+        </dt>
+
+        <dd>
+            @*@Html.DisplayFor(model => model.Photo)*@
+            <img src="~/uploads/@Model.Photo" width="80" height="80" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Res1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Res1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Res2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Res2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewedBySchool)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewedBySchool)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NeedUpdation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NeedUpdation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllCorrect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllCorrect)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.School.SchoolName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.School.SchoolName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StudentId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

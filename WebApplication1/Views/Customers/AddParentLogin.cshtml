@@ -1,0 +1,62 @@
+﻿@model WebApplication1.ParentLogin
+@using System.Data;
+@{
+    ViewBag.Title = "AddParentLogin";
+    Layout = "~/Views/Shared/Customer.cshtml";
+}
+@using (Html.BeginForm("AddParentLogin", "Customers", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal", @id = "demo-bv-wz-form" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="form-horizontal">
+                <h4>Parent Login</h4>
+                <hr />
+
+
+
+                <div class="form-group">
+                    <div class="col-md-2">
+                        School Name
+                    </div>
+                     
+                        <div class="col-md-10">
+                            @Html.DropDownList("schoolid", null, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.schoolid, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                       UserName
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.username, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.username, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                       Password
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.upassword, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.upassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <br />
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Submit" class="btn btn-info" />
+                        </div>
+                    </div>
+                </div>
+            <br />
+        </div>
+
+    </div>
+
+}
+
+<br /><br />
+<p>
+    @Html.ActionLink("Back", "ViewParentLogin")
+</p>

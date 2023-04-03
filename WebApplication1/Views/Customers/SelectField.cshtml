@@ -1,0 +1,177 @@
+﻿@model WebApplication1.softwareoption
+@using System.Data;
+@{
+
+    Layout = "~/Views/Shared/Customer.cshtml";
+    DataTable dt = ViewBag.optlist;
+}
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+
+<h2>Create</h2>
+<div>
+    @using (Html.BeginForm("SelectField", "Customers", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal", @id = "demo-bv-wz-form" }))
+    {
+
+        <div class="form-horizontal">
+            <h4>User</h4>
+            <hr />
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @if (dt != null)
+                {
+                    for (int i = 0; i < dt.Columns.Count; i++)
+                    {
+                        if (dt.Columns[i].ColumnName != "StSchool_SchoolId" && dt.Columns[i].ColumnName != "ID")
+                        {
+                            <div class="col-md-4" style="float:left">
+
+
+                                <h4>@dt.Columns[i].ColumnName</h4>
+                                @if (dt.Rows[0][i].ToString() != "")
+                                {
+                                    if (dt.Columns[i].ColumnName == "ID")
+                                    {
+                                        <input type="text" value="@dt.Rows[0][i].ToString().ToLower()" id="@dt.Columns[i]" name="@dt.Columns[i]" hidden />
+                                    }
+                                    else
+                                    {
+
+                                        if (@dt.Rows[0][i].ToString().ToLower() != "true")
+                                        {
+                                            <input type="checkbox" value="false" id="@dt.Columns[i]" name="@dt.Columns[i]" />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" checked value="true" id="@dt.Columns[i]" name="@dt.Columns[i]" />
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <input type="checkbox" value="@dt.Rows[0][i].ToString().ToLower()" id="@dt.Columns[i]" name="@dt.Columns[i]" />
+
+
+                                }
+
+                            </div>
+
+                        }
+                        else
+                        {
+                            <input type="text" value="@dt.Rows[0][i].ToString().ToLower()" id="@dt.Columns[i]" name="@dt.Columns[i]" hidden />
+                        }
+
+                    }
+                }
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Update" class="btn btn-info" />
+                </div>
+            </div>
+
+
+        </div>
+    }
+    <div>
+        @Html.ActionLink("Back to List", "School_Index")
+
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<script>
+    //window.addEventListener("pageshow", function (event) {
+    //    var historyTraversal = event.persisted || (typeof window.performance != "undefined" && window.performance.navigation.type === 2);
+    //    if (historyTraversal) {
+    //        // Handle page restore.
+    //        //alert('refresh');
+    //        window.location.reload();
+    //    }
+    //});
+    $("#StName").change(function () {
+
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#FatherName").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#MotherName").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#Dob").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#Mobile").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#Address").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#OptedConveyance").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#ClassName").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+
+    $("#SectonName").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#Session").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#Photo").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#Res1").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#Res2").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+
+
+    $("#admno").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+
+    $("#conveyance").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+
+    $("#stop").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+
+    $("#driver").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+
+    $("#driver_mobile").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+
+    $("#designation").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#RollNo").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#house").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#emergency_no").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+    $("#blood_group").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+
+</script>

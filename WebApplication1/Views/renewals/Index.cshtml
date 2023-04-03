@@ -1,0 +1,76 @@
+﻿@model IEnumerable<WebApplication1.renewal>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mobile)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.current_validity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.new_validity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.customer_amt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dealer_amt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.paid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.renewal__date)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mobile)
+        </td>
+        <td>
+           @item.current_validity
+        </td>
+        <td>
+            @item.new_validity
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.customer_amt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dealer_amt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.paid)
+        </td>
+        <td>
+           @item.renewal__date
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+        </td>*@
+    </tr>
+}
+
+</table>

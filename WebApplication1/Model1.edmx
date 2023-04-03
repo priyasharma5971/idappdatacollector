@@ -1,0 +1,631 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="IdCardDataManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustName" Type="nvarchar(max)" />
+          <Property Name="IsValid" Type="bit" Nullable="false" />
+          <Property Name="ValidTill" Type="datetime" Nullable="false" />
+          <Property Name="EnteredOnDate" Type="datetime" Nullable="false" />
+          <Property Name="ValidFrom" Type="datetime" Nullable="false" />
+          <Property Name="CustAddress" Type="nvarchar(max)" />
+          <Property Name="ContactNo" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="CustCode" Type="nvarchar(max)" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="password" Type="varchar" MaxLength="10" />
+          <Property Name="dealerid" Type="int" Nullable="false" />
+          <Property Name="dealerprice" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="customerprice" Type="decimal" Precision="9" Scale="2" />
+        </EntityType>
+        <EntityType Name="ParentLogin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="schoolid" Type="int" />
+          <Property Name="username" Type="varchar" MaxLength="10" />
+          <Property Name="upassword" Type="varchar(max)" />
+          <Property Name="isactive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Schools">
+          <Key>
+            <PropertyRef Name="SchoolId" />
+          </Key>
+          <Property Name="SchoolId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SchoolName" Type="nvarchar(max)" />
+          <Property Name="Address1" Type="nvarchar(max)" />
+          <Property Name="Address2" Type="nvarchar(max)" />
+          <Property Name="Address3" Type="nvarchar(max)" />
+          <Property Name="ContactNo" Type="nvarchar(max)" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Website" Type="nvarchar(max)" />
+          <Property Name="Logo" Type="nvarchar(max)" />
+          <Property Name="SchoolCode" Type="nvarchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CustomerId" Type="int" Nullable="false" />
+          <Property Name="updatedby" Type="int" />
+          <Property Name="password" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="softwareoptions">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="StName" Type="bit" />
+          <Property Name="FatherName" Type="bit" />
+          <Property Name="MotherName" Type="bit" />
+          <Property Name="Dob" Type="bit" />
+          <Property Name="Mobile" Type="bit" />
+          <Property Name="Address" Type="bit" />
+          <Property Name="OptedConveyance" Type="bit" />
+          <Property Name="ClassName" Type="bit" />
+          <Property Name="SectonName" Type="bit" />
+          <Property Name="Session" Type="bit" />
+          <Property Name="Photo" Type="bit" />
+          <Property Name="Res1" Type="bit" />
+          <Property Name="Res2" Type="bit" />
+          <Property Name="StSchool_SchoolId" Type="int" />
+          <Property Name="admno" Type="bit" Nullable="false" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="driver" Type="bit" Nullable="false" />
+          <Property Name="conveyance" Type="bit" Nullable="false" />
+          <Property Name="stop" Type="bit" Nullable="false" />
+          <Property Name="designation" Type="bit" Nullable="false" />
+          <Property Name="driver_mobile" Type="bit" Nullable="false" />
+          <Property Name="RollNo" Type="bit" Nullable="false" />
+          <Property Name="house" Type="bit" Nullable="false" />
+          <Property Name="emergency_no" Type="bit" Nullable="false" />
+          <Property Name="blood_group" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Students">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdmNo" Type="nvarchar(max)" />
+          <Property Name="StName" Type="nvarchar(max)" />
+          <Property Name="FatherName" Type="nvarchar(max)" />
+          <Property Name="MotherName" Type="nvarchar(max)" />
+          <Property Name="Dob" Type="nvarchar" MaxLength="30" />
+          <Property Name="Mobile" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="OptedConveyance" Type="bit" Nullable="false" />
+          <Property Name="ClassName" Type="nvarchar(max)" />
+          <Property Name="SectonName" Type="nvarchar(max)" />
+          <Property Name="Session" Type="nvarchar(max)" />
+          <Property Name="Photo" Type="nvarchar(max)" />
+          <Property Name="Res1" Type="nvarchar(max)" />
+          <Property Name="Res2" Type="nvarchar(max)" />
+          <Property Name="ReviewedBySchool" Type="bit" Nullable="false" />
+          <Property Name="ReviewDate" Type="datetime" />
+          <Property Name="NeedUpdation" Type="bit" Nullable="false" />
+          <Property Name="AllCorrect" Type="bit" Nullable="false" />
+          <Property Name="UpdatedOn" Type="datetime" />
+          <Property Name="StSchool_SchoolId" Type="int" />
+          <Property Name="Batch" Type="int" />
+          <Property Name="Excel_Photo" Type="nvarchar(max)" />
+          <Property Name="IsPhotoUpload" Type="bit" Nullable="false" />
+          <Property Name="conveyance" Type="varchar" MaxLength="50" />
+          <Property Name="stop" Type="varchar" MaxLength="50" />
+          <Property Name="driver" Type="varchar" MaxLength="50" />
+          <Property Name="driver_mobile" Type="varchar" MaxLength="10" />
+          <Property Name="designation" Type="varchar" MaxLength="50" />
+          <Property Name="rollno" Type="nvarchar" MaxLength="50" />
+          <Property Name="house" Type="nchar" MaxLength="10" />
+          <Property Name="emergency_no" Type="bigint" />
+          <Property Name="bloodgroup" Type="varchar" MaxLength="5" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="UserType" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="LastLoginDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Dealer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="mobile" Type="bigint" />
+        </EntityType>
+        <EntityType Name="renewal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar(max)" />
+          <Property Name="mobile" Type="bigint" />
+          <Property Name="current_validity" Type="datetime" />
+          <Property Name="new_validity" Type="datetime" />
+          <Property Name="customer_amt" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="dealer_amt" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="paid" Type="bit" />
+          <Property Name="renewal__date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="session_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="session" Type="varchar" MaxLength="20" />
+          <Property Name="isactive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoreAPK">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="brand" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="IdCardDataManagerModelStoreContainer">
+          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ParentLogin" EntityType="Self.ParentLogin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schools" EntityType="Self.Schools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="softwareoptions" EntityType="Self.softwareoptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Students" EntityType="Self.Students" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dealer" EntityType="Self.Dealer" Schema="idappusr" store:Type="Tables" />
+          <EntitySet Name="renewal" EntityType="Self.renewal" Schema="idappusr" store:Type="Tables" />
+          <EntitySet Name="session_master" EntityType="Self.session_master" Schema="idappusr" store:Type="Tables" />
+          <EntitySet Name="StoreAPK" EntityType="Self.StoreAPK" Schema="idappusr" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IdCardDataManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="ValidTill" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EnteredOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ValidFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <NavigationProperty Name="Schools" Relationship="Self.FK_dbo_Schools_dbo_Customers_CustomerId" FromRole="Customers" ToRole="Schools" />
+          <Property Name="password" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dealerid" Type="Int32" Nullable="false" />
+          <Property Name="dealerprice" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="customerprice" Type="Decimal" Precision="9" Scale="2" />
+        </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="SchoolId" />
+          </Key>
+          <Property Name="SchoolId" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="SchoolName" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Address1" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Address2" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Address3" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="ContactNo" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Email" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Website" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Logo" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="SchoolCode" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="IsActive" Nullable="false" Type="Boolean" />
+          <Property Name="UpdatedOn" Nullable="false" Precision="3" Type="DateTime" />
+          <Property Name="CustomerId" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_dbo_Schools_dbo_Customers_CustomerId" FromRole="Schools" ToRole="Customers" />
+          <Property Name="updatedby" Type="Int32" />
+          <Property Name="password" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserType" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_dbo_Schools_dbo_Customers_CustomerId">
+          <End Type="Self.Customer" Multiplicity="1" Role="Customers">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Self.School" Multiplicity="*" Role="Schools" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="Schools">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="IdCardDataManagerEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Schools" EntityType="Self.School" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_dbo_Schools_dbo_Customers_CustomerId" Association="Self.FK_dbo_Schools_dbo_Customers_CustomerId">
+            <End EntitySet="Customers" Role="Customers" />
+            <End EntitySet="Schools" Role="Schools" />
+          </AssociationSet>
+          <EntitySet Name="softwareoptions" EntityType="IdCardDataManagerModel.softwareoption" />
+          <EntitySet Name="ParentLogins" EntityType="IdCardDataManagerModel.ParentLogin" />
+          <EntitySet Name="Students" EntityType="IdCardDataManagerModel.Student" />
+          <EntitySet Name="Dealers" EntityType="IdCardDataManagerModel.Dealer" />
+          <EntitySet Name="renewals" EntityType="IdCardDataManagerModel.renewal" />
+          <EntitySet Name="StoreAPKs" EntityType="IdCardDataManagerModel.StoreAPK" />
+          <EntitySet Name="session_master" EntityType="IdCardDataManagerModel.session_master" />
+        </EntityContainer>
+        <EntityType Name="softwareoption">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="StName" Type="Boolean" />
+          <Property Name="FatherName" Type="Boolean" />
+          <Property Name="MotherName" Type="Boolean" />
+          <Property Name="Dob" Type="Boolean" />
+          <Property Name="Mobile" Type="Boolean" />
+          <Property Name="Address" Type="Boolean" />
+          <Property Name="OptedConveyance" Type="Boolean" />
+          <Property Name="ClassName" Type="Boolean" />
+          <Property Name="SectonName" Type="Boolean" />
+          <Property Name="Session" Type="Boolean" />
+          <Property Name="Photo" Type="Boolean" />
+          <Property Name="Res1" Type="Boolean" />
+          <Property Name="Res2" Type="Boolean" />
+          <Property Name="StSchool_SchoolId" Type="Int32" />
+          <Property Name="admno" Type="Boolean" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="driver" Type="Boolean" Nullable="false" />
+          <Property Name="conveyance" Type="Boolean" Nullable="false" />
+          <Property Name="stop" Type="Boolean" Nullable="false" />
+          <Property Name="designation" Type="Boolean" Nullable="false" />
+          <Property Name="driver_mobile" Type="Boolean" Nullable="false" />
+          <Property Name="RollNo" Type="Boolean" Nullable="false" />
+          <Property Name="house" Type="Boolean" Nullable="false" />
+          <Property Name="emergency_no" Type="Boolean" Nullable="false" />
+          <Property Name="blood_group" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ParentLogin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="schoolid" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="upassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isactive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdmNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MotherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Dob" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OptedConveyance" Type="Boolean" Nullable="false" />
+          <Property Name="ClassName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SectonName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Session" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Res1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Res2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReviewedBySchool" Type="Boolean" Nullable="false" />
+          <Property Name="ReviewDate" Type="DateTime" Precision="3" />
+          <Property Name="NeedUpdation" Type="Boolean" Nullable="false" />
+          <Property Name="AllCorrect" Type="Boolean" Nullable="false" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <Property Name="StSchool_SchoolId" Type="Int32" />
+          <Property Name="Batch" Type="Int32" />
+          <Property Name="Excel_Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsPhotoUpload" Type="Boolean" Nullable="false" />
+          <Property Name="conveyance" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="stop" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="driver" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="driver_mobile" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rollno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="house" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="emergency_no" Type="Int64" />
+          <Property Name="bloodgroup" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Dealer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="mobile" Type="Int64" />
+        </EntityType>
+        <EntityType Name="renewal">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="mobile" Type="Int64" />
+          <Property Name="current_validity" Type="DateTime" Precision="3" />
+          <Property Name="new_validity" Type="DateTime" Precision="3" />
+          <Property Name="customer_amt" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="dealer_amt" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="paid" Type="Boolean" />
+          <Property Name="renewal__date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="StoreAPK">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="brand" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="session_master">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="session" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="isactive" Type="Boolean" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IdCardDataManagerModelStoreContainer" CdmEntityContainer="IdCardDataManagerEntities1">
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="__MigrationHistory">
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="customerprice" ColumnName="customerprice" />
+                <ScalarProperty Name="dealerprice" ColumnName="dealerprice" />
+                <ScalarProperty Name="dealerid" ColumnName="dealerid" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="ValidTill" ColumnName="ValidTill" />
+                <ScalarProperty Name="EnteredOnDate" ColumnName="EnteredOnDate" />
+                <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+                <ScalarProperty Name="CustAddress" ColumnName="CustAddress" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schools">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.School">
+              <MappingFragment StoreEntitySet="Schools">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="updatedby" ColumnName="updatedby" />
+                <ScalarProperty Name="SchoolId" ColumnName="SchoolId" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address3" ColumnName="Address3" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="SchoolCode" ColumnName="SchoolCode" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="softwareoptions">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.softwareoption">
+              <MappingFragment StoreEntitySet="softwareoptions">
+                <ScalarProperty Name="blood_group" ColumnName="blood_group" />
+                <ScalarProperty Name="emergency_no" ColumnName="emergency_no" />
+                <ScalarProperty Name="house" ColumnName="house" />
+                <ScalarProperty Name="RollNo" ColumnName="RollNo" />
+                <ScalarProperty Name="driver_mobile" ColumnName="driver_mobile" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="stop" ColumnName="stop" />
+                <ScalarProperty Name="conveyance" ColumnName="conveyance" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="admno" ColumnName="admno" />
+                <ScalarProperty Name="StSchool_SchoolId" ColumnName="StSchool_SchoolId" />
+                <ScalarProperty Name="Res2" ColumnName="Res2" />
+                <ScalarProperty Name="Res1" ColumnName="Res1" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Session" ColumnName="Session" />
+                <ScalarProperty Name="SectonName" ColumnName="SectonName" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="OptedConveyance" ColumnName="OptedConveyance" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Dob" ColumnName="Dob" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="StName" ColumnName="StName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParentLogins">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.ParentLogin">
+              <MappingFragment StoreEntitySet="ParentLogin">
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="upassword" ColumnName="upassword" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="schoolid" ColumnName="schoolid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.Student">
+              <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="bloodgroup" ColumnName="bloodgroup" />
+                <ScalarProperty Name="emergency_no" ColumnName="emergency_no" />
+                <ScalarProperty Name="house" ColumnName="house" />
+                <ScalarProperty Name="rollno" ColumnName="rollno" />
+                <ScalarProperty Name="designation" ColumnName="designation" />
+                <ScalarProperty Name="driver_mobile" ColumnName="driver_mobile" />
+                <ScalarProperty Name="driver" ColumnName="driver" />
+                <ScalarProperty Name="stop" ColumnName="stop" />
+                <ScalarProperty Name="conveyance" ColumnName="conveyance" />
+                <ScalarProperty Name="IsPhotoUpload" ColumnName="IsPhotoUpload" />
+                <ScalarProperty Name="Excel_Photo" ColumnName="Excel_Photo" />
+                <ScalarProperty Name="Batch" ColumnName="Batch" />
+                <ScalarProperty Name="StSchool_SchoolId" ColumnName="StSchool_SchoolId" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="AllCorrect" ColumnName="AllCorrect" />
+                <ScalarProperty Name="NeedUpdation" ColumnName="NeedUpdation" />
+                <ScalarProperty Name="ReviewDate" ColumnName="ReviewDate" />
+                <ScalarProperty Name="ReviewedBySchool" ColumnName="ReviewedBySchool" />
+                <ScalarProperty Name="Res2" ColumnName="Res2" />
+                <ScalarProperty Name="Res1" ColumnName="Res1" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Session" ColumnName="Session" />
+                <ScalarProperty Name="SectonName" ColumnName="SectonName" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="OptedConveyance" ColumnName="OptedConveyance" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Dob" ColumnName="Dob" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="StName" ColumnName="StName" />
+                <ScalarProperty Name="AdmNo" ColumnName="AdmNo" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dealers">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.Dealer">
+              <MappingFragment StoreEntitySet="Dealer">
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="renewals">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.renewal">
+              <MappingFragment StoreEntitySet="renewal">
+                <ScalarProperty Name="renewal__date" ColumnName="renewal__date" />
+                <ScalarProperty Name="paid" ColumnName="paid" />
+                <ScalarProperty Name="dealer_amt" ColumnName="dealer_amt" />
+                <ScalarProperty Name="customer_amt" ColumnName="customer_amt" />
+                <ScalarProperty Name="new_validity" ColumnName="new_validity" />
+                <ScalarProperty Name="current_validity" ColumnName="current_validity" />
+                <ScalarProperty Name="mobile" ColumnName="mobile" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoreAPKs">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.StoreAPK">
+              <MappingFragment StoreEntitySet="StoreAPK">
+                <ScalarProperty Name="brand" ColumnName="brand" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="session_master">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.session_master">
+              <MappingFragment StoreEntitySet="session_master">
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="session" ColumnName="session" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

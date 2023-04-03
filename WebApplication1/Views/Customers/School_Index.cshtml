@@ -1,0 +1,121 @@
+﻿@model IEnumerable<WebApplication1.School>
+@{
+    /**/
+
+    ViewBag.Title = "School_Index";
+    Layout = "~/Views/Shared/Customer.cshtml";
+}
+<div class="row" style="float:right">
+    <a href="https://idapp.citronsoftwares.com/software/@ViewBag.apkname" target="_self" style="color:#ff0000">Download Id Card Data Collector App</a>
+</div>
+
+<br /><br />
+<h5>
+    <b>@Html.ActionLink("Create New School", "School_Create")</b>
+</h5>
+<h4 style="text-align:center;text-decoration:underline">
+    <b>School List</b>
+</h4>
+
+<table class="table table-responsive table-bordered table-striped" style="margin-top:5%;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SchoolName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Website)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Logo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SchoolCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.UpdatedOn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpdatedBy)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Customer.CustName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="overflow-y:scroll;min-height:150px;">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SchoolName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Website)
+                </td>
+                <td>
+                    <img src="~/uploads/@item.Logo" width="80" height="80" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SchoolCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.UpdatedOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UpdatedBy)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.CustName)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Edit", "Edit_School", new { id = item.SchoolId }) |
+                    @Html.ActionLink("Details", "School_Details", new { id = item.SchoolId }) |
+                    @Html.ActionLink("Delete", "Delete_School", new { id = item.SchoolId }, new { onclick = "return confirm('Are you sure you wish to delete this?');" })|
+                    @Html.ActionLink("Select Fields", "SelectField", new { id = item.SchoolId })|
+                    @Html.ActionLink("Change Password", "school_changepassword", new { id = item.SchoolId })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

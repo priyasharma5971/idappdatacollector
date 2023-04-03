@@ -1,0 +1,128 @@
+﻿@using WebApplication1.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<div class="container">
+   
+
+    @if (TempData["errormsg"] != null)
+    {
+        <div id="floating-top-container" class="floating-container AlertBoxCloser">
+            <div id="floating-top-center">
+                <div class="alert-wrap animated jellyIn in">
+                    <div class="alert alert-danger" role="alert">
+                        <div id="actionAlert" class="media">
+                            <strong>Alert! </strong> @TempData["errormsg"]
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="floating-top-left"></div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <section id="loginForm" style="background-color:#d31212bf;padding:2%;box-shadow:2px 2px 2px 2px">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <h3 style="text-align:center">Id Card Data Collector</h3>
+                        <br />
+                        <h5 style="text-align:center">Login Form</h5>
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h5>User Type</h5>
+                                </div>
+
+
+
+                                <div class="col-md-8" style="float:right">
+                                    @Html.DropDownListFor(m => m.usertype, new SelectList(new List<object> { "School", "User", "Admin" }), new { @class = "selectpicker form-control" })
+
+
+                                    @Html.ValidationMessageFor(model => model.usertype, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+
+                                    <h5>Username</h5>
+                                </div>
+                                <div class="col-md-8" style="float:right">
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+
+                                    <h5>Password</h5>
+                                </div>
+                                <div class="col-md-8" style="float:right">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-offset-2 col-md-12">
+                                    <div class="checkbox">
+                                        @Html.CheckBoxFor(m => m.RememberMe)
+                                        @Html.LabelFor(m => m.RememberMe)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <center>
+                                        <button type="submit" value="" class="btn btn-primary">Log in</button>
+                                       <p>
+                                              <a href="policy/citronpolicy.txt" style="color:#ff0;float:right">Privacy Policy</a>
+                                            </p>
+
+                                        @*<p>
+                                                @Html.ActionLink("Forgot your password?", "ForgotPassword")
+
+                                            </p>*@
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*<p> @Html.ActionLink("Change Password", "ChangePassword")</p>*@
+                    }
+                </section>
+            </div>
+        </div>
+        <div class="col-md-3">
+            @*<section id="socialLoginForm">
+                    @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                </section>*@
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

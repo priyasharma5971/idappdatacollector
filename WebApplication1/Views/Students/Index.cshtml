@@ -1,0 +1,318 @@
+﻿@model WebApplication1.Student
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/school.cshtml";
+}
+
+@{
+    DataTable dt = null;
+    if (ViewBag.optlist != null)
+    {
+        dt = ViewBag.optlist;
+    }
+}
+@using System.Data;
+<div class="row" style="float:right">
+    <a href="https://idapp.citronsoftwares.com/software/@ViewBag.apkname" target="_self" style="color:#ff0000">Download Id Card Data Collector App</a>
+</div>
+<br />
+<p>
+    @Html.ActionLink("Add Student", "Create")
+</p>
+
+<br />
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+           
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    School
+                    @Html.DropDownList("StSchool_SchoolId", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    Select Session
+                    @Html.DropDownListFor(x => Model.Session, new SelectList(Model.sessionlist, "session", "session"), new { @class = "selectpicker form-control" })
+
+                </div>
+
+                <div class="col-md-3">
+                    Select Batch
+                    <select name="Batch" id="Batch" class="form-control">
+
+                        <option value="1">Batch1</option>
+                        <option value="2">Batch2</option>
+
+                        <option value="3">Batch3</option>
+                        <option value="4">Batch4</option>
+                        <option value="100">Parent</option>
+
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    Select Class
+                    @Html.DropDownList("ClassName", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    Select Section
+                    @Html.DropDownList("SectonName", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    <br />
+                    <button type="submit" class="btn btn-info" formaction="~/Students/filterstudent">Filter</button>
+                </div>
+
+            </div>
+            <br />
+        </div>
+
+    </div>
+
+
+
+
+    <table class="table table-responsive table-striped table-bordered">
+        <tr>
+            <th>
+                AdmNo
+
+
+            </th>
+            <th>
+                Name
+
+            </th>
+            <th>
+                Father
+            </th>
+            <th>
+                Mother
+            </th>
+            <th>
+                Dob
+            </th>
+            <th>
+                Mobile
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                OptedConveyance
+            </th>
+            <th>
+                Class
+            </th>
+            <th>
+                Section
+            </th>
+            <th>
+                Session
+            </th>
+            <th>Batch</th>
+
+            <th>
+                Photo
+            </th>
+
+
+
+            <th></th>
+        </tr>
+        @if (dt != null && dt.Rows.Count > 0)
+        {
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (Convert.ToBoolean(dr["NeedUpdation"]))
+                {
+                    <tr style="background:#ff6a0066">
+                        <td>
+                            @dr["AdmNo"].ToString()
+                        </td>
+                        <td>
+                            @dr["StName"].ToString()
+
+                        </td>
+                        <td>
+                            @dr["FatherName"].ToString()
+                        </td>
+                        <td>
+                            @dr["MotherName"].ToString()
+                        </td>
+                        <td>
+                            @dr["Dob"].ToString()
+                        </td>
+                        <td>
+                            @dr["Mobile"].ToString()
+                        </td>
+                        <td>
+                            @dr["Address"].ToString()
+
+                        </td>
+                        <td>
+                            @dr["OptedConveyance"].ToString()
+
+                        </td>
+                        <td>
+                            @dr["ClassName"].ToString()
+                        </td>
+                        <td>
+                            @dr["SectonName"].ToString()
+                        </td>
+                        <td>
+                            @dr["Session"].ToString()
+                        </td>
+                        <td>@dr["Batch"].ToString()</td>
+
+                        <td>
+
+                            <img src="~/uploads/@dr["Photo"].ToString()" width="80" height="80" />
+                        </td>
+
+                        <td>
+                            <button class="btn btn-info" type="submit" formaction="~/Students/AllCorrect?id=@dr["StudentId"].ToString()" style="font-size:8px;">All Correct</button>
+
+                            <button class="btn btn-primary" type="submit" formaction="~/Students/NeedUpdation?id=@dr["StudentId"].ToString()" style="font-size:8px;margin-top:5%">Need Updation</button>
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = @dr["StudentId"].ToString() }) |
+                            @Html.ActionLink("Details", "Details", new { id = @dr["StudentId"].ToString() }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = @dr["StudentId"].ToString() }, new { onclick = "return confirm('Are you sure you wish to delete this?');" })
+                        </td>
+                    </tr>
+
+                }
+                else if (Convert.ToBoolean(dr["AllCorrect"]))
+                {
+                    <tr style="background:#4cff0059">
+                        <td>
+                            @dr["AdmNo"].ToString()
+                        </td>
+                        <td>
+                            @dr["StName"].ToString()
+
+                        </td>
+                        <td>
+                            @dr["FatherName"].ToString()
+                        </td>
+                        <td>
+                            @dr["MotherName"].ToString()
+                        </td>
+                        <td>
+                            @dr["Dob"].ToString()
+                        </td>
+                        <td>
+                            @dr["Mobile"].ToString()
+                        </td>
+                        <td>
+                            @dr["Address"].ToString()
+
+                        </td>
+                        <td>
+                            @dr["OptedConveyance"].ToString()
+
+                        </td>
+                        <td>
+                            @dr["ClassName"].ToString()
+                        </td>
+                        <td>
+                            @dr["SectonName"].ToString()
+                        </td>
+                        <td>
+                            @dr["Session"].ToString()
+                        </td>
+                        <td>@dr["Batch"].ToString()</td>
+
+                        <td>
+
+                            <img src="~/uploads/@dr["Photo"].ToString()" width="80" height="80" />
+                        </td>
+
+                        <td>
+                            <button class="btn btn-info" type="submit" formaction="~/Students/AllCorrect?id=@dr["StudentId"].ToString()" style="font-size:8px;">All Correct</button>
+
+                            <button class="btn btn-primary" type="submit" formaction="~/Students/NeedUpdation?id=@dr["StudentId"].ToString()" style="font-size:8px;margin-top:5%">Need Updation</button>
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = @dr["StudentId"].ToString() }) |
+                            @Html.ActionLink("Details", "Details", new { id = @dr["StudentId"].ToString() }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = @dr["StudentId"].ToString() }, new { onclick = "return confirm('Are you sure you wish to delete this?');" })
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td>
+                            @dr["AdmNo"].ToString()
+                        </td>
+                        <td>
+                            @dr["StName"].ToString()
+
+                        </td>
+                        <td>
+                            @dr["FatherName"].ToString()
+                        </td>
+                        <td>
+                            @dr["MotherName"].ToString()
+                        </td>
+                        <td>
+                            @dr["Dob"].ToString()
+                        </td>
+                        <td>
+                            @dr["Mobile"].ToString()
+                        </td>
+                        <td>
+                            @dr["Address"].ToString()
+
+                        </td>
+                        <td>
+                            @dr["OptedConveyance"].ToString()
+
+                        </td>
+                        <td>
+                            @dr["ClassName"].ToString()
+                        </td>
+                        <td>
+                            @dr["SectonName"].ToString()
+                        </td>
+                        <td>
+                            @dr["Session"].ToString()
+                        </td>
+                        <td>@dr["Batch"].ToString()</td>
+
+                        <td>
+
+                            <img src="~/uploads/@dr["Photo"].ToString()" width="80" height="80" />
+                        </td>
+
+                        <td>
+                            <button class="btn btn-info" type="submit" formaction="~/Students/AllCorrect?id=@dr["StudentId"].ToString()" style="font-size:8px;">All Correct</button>
+
+                            <button class="btn btn-primary" type="submit" formaction="~/Students/NeedUpdation?id=@dr["StudentId"].ToString()" style="font-size:8px;margin-top:5%">Need Updation</button>
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = @dr["StudentId"].ToString() }) |
+                            @Html.ActionLink("Details", "Details", new { id = @dr["StudentId"].ToString() }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = @dr["StudentId"].ToString() }, new { onclick = "return confirm('Are you sure you wish to delete this?');" })
+                        </td>
+                    </tr>
+                }
+
+
+
+            }
+        }
+
+    </table>
+}
+

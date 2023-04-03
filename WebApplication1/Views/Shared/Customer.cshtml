@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Id Card Data Collector</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        <script src="~/Scripts/bootstrap.min.js"></script>*@
+
+
+</head>
+<body style="padding:0;">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="background:#0dcaf0">
+        <div class="container">
+           
+            <div class="col-md-12">
+                <center>
+                    <div class="navbar-collapse collapse" style="display:block;">
+                        <ul class="nav navbar-nav" style="display:block;flex-direction:row-reverse;display:flex;">
+
+
+
+                            <li style="padding:2%">@Html.ActionLink("Logout", "LogOff", "Account")</li>
+                            <li style="padding:2%">@Html.ActionLink("Upload Photos", "UploadPhoto", "Customers")</li>
+
+
+                            <li style="padding:2%">@Html.ActionLink("Import From Excel", "ImportExcel", "Customers")</li>
+                            
+                            <li style="padding:2%">@Html.ActionLink("Change Password", "customer_changepassword", "Customers")</li>
+
+
+                            <li style="padding:2%">@Html.ActionLink("Create Parent Login", "viewparentlogin", "Customers")</li>
+
+
+                            <li style="padding:2%">@Html.ActionLink("Student", "Student_Index", "Customers")</li>
+
+
+
+                            <li style="padding:2%">@Html.ActionLink("Add School", "School_Create", "Customers")</li>
+
+                            <li style="padding:2%;">
+                                <a href="~/Customers/School_Index">Home</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </center>
+            </div>
+          
+        </div>
+    </div>
+    @*@Html.Partial("_LoginPartial")*@
+    <div class="container body-content">
+        <br />
+        @if (TempData["errormsg"] != null)
+        {
+            <div id="floating-top-container" class="floating-container AlertBoxCloser">
+                <div id="floating-top-center">
+                    <div class="alert-wrap animated jellyIn in">
+                        <div class="alert alert-danger" role="alert">
+                            <div id="actionAlert" class="media">
+                                <strong>Alert! </strong> @TempData["errormsg"]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="floating-top-left"></div>
+            </div>
+        }
+        @if (TempData["smsg"] != null)
+        {
+            <div id="floating-top-container" class="floating-container AlertBoxCloser">
+                <div id="floating-top-center">
+                    <div class="alert-wrap animated jellyIn in">
+                        <div class="alert alert-success" role="alert">
+                            <div id="actionAlert" class="media">
+                                <strong>Success! </strong> @TempData["smsg"]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="floating-top-left"></div>
+            </div>
+        }
+
+
+        @RenderBody()
+        <hr />
+
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Citron Softwares</p>
+        </footer>
+    </div>
+
+    @*@Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")*@
+    @RenderSection("scripts", required: false)
+
+
+</body>
+</html>

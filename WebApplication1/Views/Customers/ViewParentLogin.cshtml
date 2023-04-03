@@ -1,0 +1,84 @@
+﻿@model WebApplication1.ParentLogin
+@using System.Data;
+@{
+    ViewBag.Title = "ViewParentLogin";
+    Layout = "~/Views/Shared/Customer.cshtml";
+}
+@{
+    DataTable dt = null;
+    if (ViewBag.parentloginlist != null)
+    {
+        dt = ViewBag.parentloginlist;
+    }
+}
+<br /><br />
+<p>
+    @Html.ActionLink("Add Parent Login", "AddParentLogin")
+</p>
+
+<br />
+@using (Html.BeginForm())
+    {
+
+
+<table class="table table-striped table-bordered table-responsive">
+    <tr>
+        <th>School</th>
+        <th>
+            Username
+        </th>
+        <th>
+            password
+        </th>
+        <th>IsActive</th>
+    </tr>
+    @if (dt != null)
+    {
+
+        foreach (DataRow dr in dt.Rows)
+        {
+            <tr>
+                <input value="@dr["id"]" hidden id="id_@dr["id"]"/>
+                <td>@dr["schoolname"].ToString()</td>
+                <td>
+                    @dr["username"].ToString()
+                </td>
+
+
+                <td>
+                    <input id="cpass_@dr["username"]" value="@dr["upassword"].ToString()" class="hpass" readonly>
+
+                    <input type="password" id="wpass_@dr["username"]" value="@dr["upassword"].ToString()" readonly>
+
+
+                </td>
+                <td>
+
+                    <input type="checkbox" id="isactive" name="isactive" value="@dr["isactive"].ToString()" checked="@dr["isactive"]" />
+                </td>
+                <td>
+                    <button id="showpass_@dr["username"]" onclick="showpass('@dr["username"].ToString()')" type="button">Show</button>
+                    <button id="" type="submit" formaction="UpdateParentLogin?id=@dr["id"]">Save</button>
+                </td>
+            </tr>
+            }
+        }
+
+</table>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+    $(".hpass").hide();
+    function showpass(name) {
+        var c = "cpass_" + name;
+        var w = "wpass_" + name;
+        $("#" + c).show();
+        $("#" + w).hide();
+        $("#showpass_" + name).hide();
+
+    }
+    $("#isactive").change(function () {
+        if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+    });
+</script>

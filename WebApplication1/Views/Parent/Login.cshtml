@@ -1,0 +1,126 @@
+﻿@model WebApplication1.ParentLogin
+
+@{
+    ViewBag.Title = "Login";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="col-md-12" id="loginblock">
+                <section id="loginForm" style="background-color:#ff6a00;padding:2%">
+
+                    
+
+                    <h4 style="text-align:center">Login Form</h4>
+                    <hr />
+
+                    <br />
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+
+                                <h5>Username</h5>
+                            </div>
+                            <div class="col-md-8" style="float:right">
+                                <input type="text" name="username" id="username" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-4">
+
+                                <h5>Password</h5>
+                            </div>
+                            <div class="col-md-8" style="float:right">
+                                <input type="text" name="upassword" id="upassword" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                    <button type="button" id="loginbtn" value="" class="btn btn-primary">Log in</button>
+
+
+
+                </section>
+            </div>
+            <div class="col-md-12 col-xs-12" id="admnblock">
+                <input type="text" id="schoolid"  />
+
+                <p>Admission No</p>
+                <input type="text" id="admno" class="form-control" />
+                <br />
+                <button type="button" id="okbtn" class="btn btn-info">OK</button>
+            </div>
+
+
+
+        </div>
+       
+    </div>
+
+    <div class="row">
+
+    </div>
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script>
+    $(document).ready(function () {
+        $("#admnblock").hide();
+
+        $("#loginbtn").click(function () {
+            var username = $("#username").val();
+            var upassword = $("#upassword").val();
+
+            $.ajax({
+                url: '/Parent/Login',
+                data: { 'username': username, 'password': upassword },
+                type: "post",
+                cache: false,
+                success: function (data) {
+                    if (data == false) { alert('Login Failed'); }
+                    else {
+                        $("#schoolid").val(data);
+                        $("#admnblock").show();
+                        $("#loginblock").hide();
+                    }
+                }
+            });
+        });
+
+
+        $("#okbtn").click(function () {
+            var schoolid = $("#schoolid").val();
+            var admno = $("#admno").val();
+            $.ajax({
+                url: '/Parent/FilterStudent',
+                data: { 'admno': admno, 'schoolid': schoolid },
+                type: "post",
+                cache: false,
+                success: function (data) {
+
+                    const myObj = { name: data.StName, studentid: data.StudentId, admno: data.AdmNo, fathername: data.FatherName, mothername: data.MotherName, address: data.Address, mobile: data.Mobile, dob: data.Dob, OptedConveyance: data.OptedConveyance, ClassName: data.ClassName, SectionName: data.SectonName, Session: data.Session, Photo: data.Photo, schoolid:schoolid };
+                    const myJSON = JSON.stringify(myObj);
+
+                    localStorage.setItem('myMainKey', myJSON);
+                    window.location.href = "Create" ;
+
+
+                }
+            });
+        });
+    });
+
+</script>
+

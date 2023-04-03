@@ -1,0 +1,137 @@
+﻿@model WebApplication1.Models.BulkImage
+@{
+    ViewBag.Title = "UploadPhoto";
+    Layout = "~/Views/Shared/Customer.cshtml";
+}
+
+
+
+
+
+<div class="container">
+    @*@using (Html.BeginForm("UploadPhoto", "Customers", FormMethod.Post, new { @enctype = "multipart/form-data", @class = "form-horizontal", @id = "demo-bv-wz-form" }))
+        {
+
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Select School
+                            @Html.DropDownList("StSchool_SchoolId", null, htmlAttributes: new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-3">
+                            Select Session
+                            <select name="Session" id="Session" class="form-control">
+                                <option value="2022-2023">2022-2023</option>
+                                <option value="2023-2024">2023-2024</option>
+                                <option value="2024-2025">2024-2025</option>
+
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="file" name="Files" id="Files" multiple />
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-danger">Upload</button>
+                        </div>
+                    </div>
+                        <br />
+                    </div>
+
+            </div>
+        }*@
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-3">
+                    Select School
+                    @Html.DropDownList("StSchool_SchoolId", null, htmlAttributes: new { @class = "form-control" })
+                </div>
+                <div class="col-md-3">
+                    Select Session
+                    @Html.DropDownListFor(x => Model.session, new SelectList(Model.sessionlist, "session", "session"), new { @class = "selectpicker form-control",@id="Session" })
+
+                </div>
+                <div class="col-md-3">
+                  
+                    <input type="file" name="Files" id="Files" multiple onchange="uploadFile()" />
+                </div>
+
+            </div>
+            <br />
+        </div>
+
+    </div>
+    <div id="uploadDetails" class="form-group">
+        <div class="input-group">
+
+            @*<span class="input-group-btn">
+                <span class="btn btn-primary btn-file">
+                    Browse&hellip; <input type="file" name="file" id="file" />
+                </span>
+            </span>*@
+            <input type="text" id="filename" class="form-control" readonly />
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button" id="uploadFile"><span class="glyphicon glyphicon-upload"></span> Upload  </button>
+
+            </span>
+
+        </div>
+        <img class="img" src="~/img/giphy.gif" style="display:none" />
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+
+
+
+    function fileSelect(id, e) {
+       
+        //var filename = e.target.files[0].name;
+        //$('#filename').val(filename);
+
+    }
+    $(document).on('click', '#uploadFile', function () {
+          var fileElement = document.getElementById('Files');
+        var file = fileElement.files[0];
+
+        var formData = new FormData();
+       formData.append("filename", fileElement.files[0].name);
+          formData.append("Files", file, fileElement.files[0].name);
+          formData.append("StSchool_SchoolId", $("#StSchool_SchoolId").val());
+          formData.append("session", $("#Session").val());
+        var html = $('#uploadFile').html();
+        
+        $.ajax({
+            url: "@Url.Action("UploadFile", "Customers")",
+            type: "POST",
+            data: formData,
+            processData: false,  // tell jQuery not to process the data
+            contentType: false,   // tell jQuery not to set contentType
+            
+            success: function (data) {
+                alert(data)
+                window.location.reload = true;
+             
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                $('#uploadFile').html(html);
+                alert(xhr.responseText);
+            }
+
+        });
+    });
+
+
+
+    
+   
+
+</script>

@@ -1,0 +1,366 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    // Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="col-md-12">
+                <div class="form-horizontal">
+                    <h4> Add/Modify  Student</h4>
+                    <hr />
+                    @*@Html.HiddenFor(model => model.Batch)
+        @Html.HiddenFor(model => model.StSchool_SchoolId)
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if ((bool)dt.Rows[0]["admno"] != false)
+        {*@
+                    <input type="text" id="schoolid" name="schoolid" class="form-control" hidden />
+                    <input type="text" id="StudentId" name="StudentId" class="form-control" hidden />
+                    <div class="form-group" id="AdmNo1">
+                        Admno
+                        <div class="col-md-10">
+                            <input type="text" id="AdmNo" name="AdmNo" class="form-control" />
+
+                        </div>
+                    </div>
+                    @*}
+        @if ((bool)dt.Rows[0]["StName"] != false)
+        {*@
+                    <div class="form-group" id="StName1">
+                        Student Name
+
+                        <div class="col-md-10">
+                            <input type="text" id="StName" name="StName" class="form-control" />
+
+
+                        </div>
+                    </div>
+                    @*}
+        @if ((bool)dt.Rows[0]["FatherName"] != false)
+        {*@
+                    <div class="form-group" id="FatherName1">
+                        Faher Name
+
+                        <div class="col-md-10">
+                            <input id="FatherName" name="FatherName" class="form-control" />
+
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="MotherName1">
+                        MotherName
+
+                        <div class="col-md-10">
+                            <input id="MotherName" name="MotherName" class="form-control" />
+
+                        </div>
+                    </div>
+                    <div class="form-group" id="Dob1">
+                        DOB
+
+                        <div class="col-md-10">
+                            <input id="Dob" name="Dob" class="form-control" />
+
+                        </div>
+                    </div>
+                    <div class="form-group" id="Mobile1">
+                        Mobile
+
+                        <div class="col-md-10">
+                            <input id="Mobile" name="Mobile" class="form-control" />
+
+                        </div>
+                    </div>
+                    <div class="form-group" id="Address1">
+                        Address
+
+                        <div class="col-md-10">
+                            <input id="Address" name="Address" class="form-control" />
+
+                        </div>
+                    </div>
+                    <div class="form-group" id="OptedConveyance1">
+                        OptedConveyance
+
+                        <div class="col-md-10">
+                            <input id="OptedConveyance" name="OptedConveyance" type="checkbox" />
+
+                        </div>
+                    </div>
+                    <div class="form-group" id="ClassName1">
+                        ClassName
+
+                        <div class="col-md-10">
+                            <input id="ClassName" name="ClassName" class="form-control" />
+
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="SectionName1">
+                        SectionName
+
+                        <div class="col-md-10">
+                            <input id="SectionName" name="SectionName" class="form-control" />
+
+                        </div>
+                    </div>
+                    <div class="form-group" id="Session1">
+                        Session
+
+                        <div class="col-md-10">
+                            <input id="Session" name="Session" class="form-control" />
+
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <input type="checkbox" id="gallery" />
+                            <label class="form-check-label">
+                                Take From Gallery
+                            </label>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <input type="checkbox" value="Take From Camera" id="camera" />
+                            <label class="form-check-label">
+                                Take From Camera
+                            </label>
+                        </div>
+                    </div>
+                    <br />
+
+                    <div class="form-group" id="cameraphoto" >
+                       
+                    </div>
+
+                    <div class="form-group">
+                        <img id="Photo" height="80" name="Photo" />
+
+                    </div>
+
+                    <div class="form-group" id="Photo1" >
+                        Photo
+
+                      
+                        <div class="col-md-10">
+                            <br />
+                            <input id="UploadPhoto" name="UploadPhoto" type="file" />
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="button" value="Submit" id="submitbtn" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#Photo1").hide(); $("#cameraphoto").hide();
+
+        $("#OptedConveyance").click(function () {
+            if (this.checked) { $(this).val(true); } else { $(this).val(false); }
+           
+        });
+
+
+        let data = localStorage.getItem('myMainKey');
+        let obj = JSON.parse(data);
+        if (obj !== undefined) {
+
+             $("#AdmNo").val(obj.admno);
+            $("#StName").val(obj.name);
+            $("#FatherName").val(obj.fathername);
+            $("#MotherName").val(obj.mothername);
+            var date = new Date(parseInt(obj.dob.substr(6)));
+
+            $("#Dob").val(date.toLocaleDateString('en-GB'));
+            $("#Address").val(obj.address);
+            $("#ClassName").val(obj.ClassName);
+            $("#SectionName").val(obj.SectionName);
+            $("#Session").val(obj.Session);
+            $("#Mobile").val(obj.mobile);
+            $("#StudentId").val(obj.studentid);
+            $("#schoolid").val(obj.schoolid);
+            $("#Photo").attr("src", "../uploads/" + obj.Photo);
+            $("#Photo").val(obj.Photo);
+
+            if (obj.OptedConveyance == true) {
+                document.getElementById('OptedConveyance').checked = true;
+
+            }
+            else {
+                document.getElementById('OptedConveyance').checked = false;
+
+            }
+
+        } 
+
+        //softwareoptions
+        var schoolid = obj.schoolid;
+        $.ajax({
+            url: '/Parent/SelectField',
+            data: { 'schoolid': schoolid },
+            type: "post",
+            cache: false,
+            success: function (data) {
+                if (data.AdmNo != true) {
+                    $("#AdmNo1").hide();
+                }
+                if (data.StName != true) {
+                    $("#StName1").hide();
+                }
+                if (data.FatherName != true) {
+
+                    $("#FatherName1").hide();
+                }
+                if (data.MotherName != true) {
+                    $("#MotherName1").hide();
+                }
+
+                if (data.Dob != true) {
+                    $("#Dob1").hide();
+                }
+                
+                if (data.Address != true) {
+                    $("#Address1").hide();
+                }
+               
+                if (data.ClassName != true) {
+                    $("#ClassName1").hide();
+                }
+
+                if (data.SectonName != true) {
+                    $("#SectionName1").hide();
+                }
+
+                if (data.Session != true) {
+                    $("#Session1").hide();
+                }
+                if (data.Mobile != true) {
+                    $("#Mobile1").hide();
+                }
+
+                if (data.Photo != true) {
+                    $("#Photo1").hide();
+                }
+                
+                
+
+                if (data.OptedConveyance != true) {
+                    $("#OptedConveyance1").hide();
+                }
+
+
+
+
+
+
+
+
+
+
+            }
+        });
+
+
+
+
+        $("#submitbtn").click(function () {
+            var formData = new FormData();
+            var files = $("#UploadPhoto").get(0).files;
+            formData.append("AdmNo", $("#AdmNo").val());
+            formData.append("StudentId", $("#StudentId").val());
+            formData.append("StName", $("#StName").val());
+            formData.append("FatherName", $("#FatherName").val());
+            formData.append("MotherName", $("#MotherName").val());
+
+            formData.append("ClassName", $("#ClassName").val());
+            formData.append("SectionName", $("#SectionName").val());
+            formData.append("Session", $("#Session").val());
+
+            formData.append("Dob", $("#Dob").val());
+            formData.append("Mobile", $("#Mobile").val());
+            formData.append("Address", $("#Address").val());
+
+            formData.append("OptedConveyance", $("#OptedConveyance").val());
+            formData.append("schoolid", $("#schoolid").val());
+            formData.append("PhotoUpload", files[0]);
+            formData.append("Photo", $("#Photo").val());
+
+            $.ajax({
+                url: '/Parent/SaveUpdateRecord',
+
+                data: formData,
+                //data: JSON.stringify(studentdata),
+                type: "post",
+                //contentType: "application/json",
+                contentType: false,
+                processData: false,
+
+                success: function (data) {
+                   
+                    alert(data);
+                    window.location.href = "Login";
+
+
+                }
+            });
+
+        });
+
+        $("#gallery").change(function () {
+
+            if (this.checked) {
+                $(this).val(true);
+            
+
+                $("#Photo1").show();
+                $("#cameraphoto").hide();
+                $("#camera").prop('checked', false);
+
+            }
+            else
+            {
+                $(this).val(false);
+             
+
+                $("#Photo1").hide();
+            }
+        });
+
+        $("#camera").change(function () {
+
+            if (this.checked) {
+                $(this).val(true);
+                $("#cameraphoto").show();
+                $("#Photo1").hide();
+                $("#gallery").prop('checked', false);
+            }
+            else {
+                $(this).val(false);
+                $("#cameraphoto").hide();
+            }
+        });
+
+
+    });
+
+</script>
+
