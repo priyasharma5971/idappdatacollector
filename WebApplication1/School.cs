@@ -30,7 +30,7 @@ namespace WebApplication1
         public int CustomerId { get; set; }
         public Nullable<int> updatedby { get; set; }
         public string password { get; set; }
-    public HttpPostedFileBase LogoUpload { get; set; }
+        public HttpPostedFileBase LogoUpload  { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

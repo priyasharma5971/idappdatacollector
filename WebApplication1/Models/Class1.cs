@@ -45,7 +45,7 @@ namespace WebApplication1.Models
             public string house { get; set; }
             public long emergency_no { get; set; }
             public string bloodgroup { get; set; }
-
+            public int size { get; set; }
             public Nullable<int> schoolid { get; set; }
             public HttpPostedFileBase croppedImage { get; set; }
 
@@ -85,6 +85,7 @@ namespace WebApplication1.Models
             [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
+
 
 
     }

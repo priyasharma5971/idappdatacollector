@@ -187,7 +187,16 @@ namespace WebApplication1.Controllers
             }
 
             var schools = db.Schools.Where(s => s.CustomerId == id);
-            return View(schools.ToList());
+            var a = (from m in db.Schools.ToList().Where(x => x.CustomerId == id)
+                     join s in db.Students on m.SchoolId equals s.StSchool_SchoolId
+                     select new Student
+                     {
+                         Size = s.Size,
+                         IsPhotoUpload=s.IsPhotoUpload,
+                     }).ToList();
+            ViewBag.totalsize = a.ToList().Sum(x => x.Size);
+            ViewBag.ToalPhoto = a.ToList().Where(x => x.IsPhotoUpload == true).Count();
+                return View(schools.ToList());
         }
 
         [AutorizeUser]
@@ -711,6 +720,7 @@ namespace WebApplication1.Controllers
                             student.PhotoUpload.SaveAs(ServerSavePath);
                             student.Photo = filename;
                             student.IsPhotoUpload = true;
+                            student.Size= sizeinkb;
                         }
                         else
                         {
@@ -804,6 +814,7 @@ namespace WebApplication1.Controllers
                             student.PhotoUpload.SaveAs(ServerSavePath);
                             student.Photo = filename;
                             student.IsPhotoUpload = true;
+                            student.Size = sizeinkb;
                         }
                         else
                         {
@@ -843,6 +854,20 @@ namespace WebApplication1.Controllers
         public ActionResult Student_Delete(int? id)
         {
             Student student = db.Students.Find(id);
+            if (student.Photo!=null && student.Photo!="")
+            {
+                var a = student.Photo.Split('?');
+                if (a[0] != "")
+                {
+                    string dirUrl = "/uploads/" + a[0];
+
+                    string dirPath = Server.MapPath(dirUrl);
+                    if (System.IO.File.Exists(dirPath))
+                    {
+                        System.IO.File.Delete(dirPath);
+                    }
+                }
+            }
             db.Students.Remove(student);
             db.SaveChanges();
             TempData["smsg"] = "success";
@@ -873,6 +898,25 @@ namespace WebApplication1.Controllers
         {
            List<Student> q = db.Students.Where(x=>x.Session==st.Session && x.Batch==st.Batch && x.StSchool_SchoolId==st.StSchool_SchoolId).ToList();
 
+            foreach (var item in q)
+            {
+                if (item.Photo != null)
+                {
+
+                    var a = item.Photo.Split('?');
+                    if (a[0]!="")
+                    {
+                        string dirUrl = "/uploads/" + a[0];
+                        string dirPath = Server.MapPath(dirUrl);
+                        if (System.IO.File.Exists(dirPath))
+                        {
+                            System.IO.File.Delete(dirPath);
+                        }
+                    }
+                }
+            }
+
+
             db.Students.RemoveRange(q);
             db.SaveChanges();
             TempData["smsg"] = "success";
@@ -902,12 +946,14 @@ namespace WebApplication1.Controllers
         {
             DateTime UpdatedOn = DateTime.Now;
             
-            var photo = st.PhotoUpload.FileName; 
+            var photo = st.PhotoUpload.FileName;
+          
             var ServerSavePath = Path.Combine(Server.MapPath("~/uploads/"), photo);
             st.PhotoUpload.SaveAs(ServerSavePath);
             string connectionString = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" + ServerSavePath + ";Extended Properties='Excel 12.0 Xml;HDR=YES;IMEX=1;'";
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
+               
                 DataTable excelDataSet = new DataTable();
                 conn.Open();
                 OleDbDataAdapter objDA = new System.Data.OleDb.OleDbDataAdapter
@@ -920,7 +966,7 @@ namespace WebApplication1.Controllers
                     Student stud = new Student();
                     stud.Address = (Convert.IsDBNull(dr["address"]) ? "" : dr["address"].ToString());
                     stud.AdmNo = (Convert.IsDBNull(dr["admno"])?"": dr["admno"].ToString());
-                    stud.rollno = Convert.IsDBNull(dr["rollno"]).ToString();
+                    stud.rollno = (Convert.IsDBNull(dr["rollno"])?"": dr["rollno"].ToString());
 
                     stud.AllCorrect = false;
                     stud.ClassName = (Convert.IsDBNull(dr["Class"])?"": dr["Class"].ToString());
@@ -1104,14 +1150,18 @@ namespace WebApplication1.Controllers
             {
                 if (item.Photo != null)
                 {
-                    var q = item.Photo.Split('?', ' ');
+                    var q = item.Photo.Split('?');
 
+                    var a = "";
+                    
+                       a= source + "\\" + q[0];
 
-                    //System.IO.File.Delete(dirPath + "\\" + q[0]);
-                    var a = source + "\\" + q[0];
+                    
+                   
                     if (System.IO.File.Exists(a))
                     {
                         var b = dirPath + "\\" + q[0];
+
                         if (!System.IO.File.Exists(b))
                         {
                             System.IO.File.Copy(source + "\\" + q[0], dirPath + "\\" + q[0]);
@@ -1308,69 +1358,18 @@ namespace WebApplication1.Controllers
         [AutorizeUser]
         public ActionResult UploadFile(WebApplication1.Models.bulhimagetest student)
         {
-            var dirPath = Server.MapPath("/zipfile");
+           var dirPath = "/zipfile/"+student.StSchool_SchoolId;
+           
             if (student.Files != null)
             {
                 foreach (HttpPostedFileBase file in student.Files)
                 {
+               
+                    int j = 0;
                     var extension = Path.GetExtension(file.FileName).ToLower();
-                    if (extension.ToUpper() != ".ZIP")
-                    {
-                        extension = "jpg";
-                        var st = db.Students.Where(x => x.StSchool_SchoolId == student.StSchool_SchoolId && x.Session == student.session && x.Excel_Photo == file.FileName).FirstOrDefault();
-
-                        if (st != null)
-                        {
-                            var msg = "";
-
-                            try
-                            {
-                                var sizeinbyte = file.ContentLength;
-
-                                var sizeinkb = (sizeinbyte) / (1024);
-                                if (sizeinkb > 500)
-                                {
-                                    TempData["errormsg"] = "Photo Size should not be greator than 500 kb..!";
-                                    return RedirectToAction("Index");
-                                }
-                                else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
-                                {
-
-                                    var filename = st.AdmNo + st.Session + st.School.SchoolCode + extension;
-
-                                    var ServerSavePath = Path.Combine(Server.MapPath("~/uploads/"), filename);
-                                    System.IO.File.Delete(ServerSavePath);
-                                    file.SaveAs(ServerSavePath);
-                                    st.IsPhotoUpload = true;
-                                    st.Photo = filename;
-                                    db.Entry(st).State = EntityState.Modified;
-                                    db.SaveChanges();
-
-                                }
-                                else
-                                {
-                                    TempData["errormsg"] = "You must select an image file only.";
-                                    return Json(TempData["errormsg"], JsonRequestBehavior.AllowGet);
-                                 
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                TempData["errormsg"] = e.Message;
-                                return Json(TempData["errormsg"], JsonRequestBehavior.AllowGet);
-                                //return RedirectToAction("UploadPhoto");
-                            }
-                            return Json("Updated..!", JsonRequestBehavior.AllowGet);
-                        }
-                        else
-                        {
-                            return Json(" There Are No Record with this Filename..!", JsonRequestBehavior.AllowGet);
-                        }
-                    }
-                    else
-                    {
-                        Directory.CreateDirectory(dirPath);
-                        Directory.CreateDirectory(dirPath + "\\" + file.FileName.Replace(".zip", "").Trim());
+                    var school  = db.Schools.Where(x => x.SchoolId == student.StSchool_SchoolId).FirstOrDefault();
+                        
+                        Directory.CreateDirectory(dirPath + "\\" + student.StSchool_SchoolId);
                         using (ZipFile zip1 = ZipFile.Read(file.InputStream))
                         {
                             var selection = (from e in zip1.Entries
@@ -1381,39 +1380,61 @@ namespace WebApplication1.Controllers
                                 e.Extract(dirPath);
                             }
                         }
-                        DirectoryInfo Folder;
-                        FileInfo[] images;
-                        Folder = new DirectoryInfo(dirPath + "\\" + file.FileName.Replace(".zip", "").Trim());
+
+
+                        var sizeinbyte = file.ContentLength;
+
+                        var sizeinkb = (sizeinbyte) / (1024);
+
+                    //DirectoryInfo Folder;
+                    FileInfo[] images;
+                       System.IO.DirectoryInfo Folder = new DirectoryInfo(dirPath);
+                   
+
                         images = Folder.GetFiles();
+                        
                         for (int i = 0; i < images.Length; i++)
                         {
+                        
+
                             var img = images[i].Name;
+                            
+                            img = Path.ChangeExtension(img, null);
                             var st = db.Students.Where(x => x.StSchool_SchoolId == student.StSchool_SchoolId && x.Session == student.session && x.Excel_Photo == img).FirstOrDefault();
 
                             if (st != null)
                             {
                                 var msg = "";
+                                var sizeinbyte1 = images[i].Length;
 
+                                var sizeinkb1 = (sizeinbyte1) / (1024);
+                                 extension = ".jpg";
                                 try
                                 {
-                                    var sizeinbyte = images[i].Length;
-
-                                    var sizeinkb = (sizeinbyte) / (1024);
-                                    if (sizeinkb > 500)
+                                   
+                                    if (sizeinkb1 > 200)
                                     {
-                                        TempData["errormsg"] = "Photo Size should not be greator than 500 kb..!";
-                                        return RedirectToAction("Index");
+                                  
+                                        //return Json("Photo Size should not be greator than 200 kb..!", JsonRequestBehavior.AllowGet);
                                     }
                                     else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
                                     {
 
-                                        var filename = st.AdmNo + st.Session + st.School.SchoolCode + "jpg";
+                                    
+                                        j += 1;
+                                        var filename = st.StudentId + st.Session + school.SchoolCode + ".jpg";
 
                                         var ServerSavePath = Path.Combine(Server.MapPath("~/uploads/"), filename);
                                         System.IO.File.Delete(ServerSavePath);
-                                        file.SaveAs(ServerSavePath);
+                                    string src = dirPath +"/"+ images[i].Name;
+                                    string dest = ServerSavePath;
+
+                                    System.IO.File.Copy(src, dest);
+
+                                        //file.SaveAs(ServerSavePath);
                                         st.IsPhotoUpload = true;
                                         st.Photo = filename;
+                                        st.Size =(int) sizeinkb1;
                                         db.Entry(st).State = EntityState.Modified;
                                         db.SaveChanges();
 
@@ -1421,177 +1442,40 @@ namespace WebApplication1.Controllers
                                     }
                                     else
                                     {
-                                        TempData["errormsg"] = "You must select an image file only.";
-                                        return RedirectToAction("UploadPhoto");
+
+                                        return Json("You must select an image file only.", JsonRequestBehavior.AllowGet);
                                     }
                                 }
                                 catch (Exception e)
                                 {
-                                    TempData["errormsg"] = e.Message;
-                                    return RedirectToAction("UploadPhoto");
+                                    return Json(e.Message, JsonRequestBehavior.AllowGet);
                                 }
 
                             }
                         }
 
-                        var query = Directory.GetFiles(dirPath + "\\" + file.FileName.Replace(".zip", "").Trim());
+                        var query = Directory.GetFiles(dirPath);
                         foreach (var item in query)
                         {
                             System.IO.File.Delete(item);
                         }
-                        var f = dirPath + "\\" + file.FileName.Replace(".zip", "").Trim();
+                       
+                        System.IO.DirectoryInfo di = new DirectoryInfo(dirPath);
+                        foreach (FileInfo file1 in di.GetFiles())
+                        {
+                            file1.Delete();
+                        }
+                        di.Delete(true);
 
-                        Directory.Delete(f);
-                        Directory.Delete(dirPath);
-                        return Json("Updated..!", JsonRequestBehavior.AllowGet);
+                        return Json(""+j+" photos Updated..!", JsonRequestBehavior.AllowGet);
                     }
-                }
+                
             }
             return Json("File NoT Select..!",JsonRequestBehavior.AllowGet);
         }
 
-       [HttpPost]
-        [AutorizeUser]
-        public ActionResult UploadPhoto(WebApplication1.Models.BulkImage student)
-        {
-            var dirPath = Server.MapPath("/zipfile");
-            if (student.Files != null)
-            {
-                foreach (HttpPostedFileBase file in student.Files)
-                {
-                    var extension = Path.GetExtension(file.FileName);
-                   
-                    if (extension.ToUpper()!=".ZIP")
-                    {
-                        var st = db.Students.Where(x => x.StSchool_SchoolId == student.StSchool_SchoolId && x.Session == student.session && x.Excel_Photo == file.FileName).FirstOrDefault();
-
-                        if (st != null)
-                        {
-                            var msg = "";
-
-                            try
-                            {
-                                var sizeinbyte = file.ContentLength;
-
-                                var sizeinkb = (sizeinbyte) / (1024);
-                                if (sizeinkb > 500)
-                                {
-                                    TempData["errormsg"] = "Photo Size should not be greator than 500 kb..!";
-                                    return RedirectToAction("Index");
-                                }
-                                else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
-                                {
-
-                                    var filename = st.AdmNo + st.Session + st.School.SchoolCode + extension;
-
-                                    var ServerSavePath = Path.Combine(Server.MapPath("~/uploads/"), filename);
-                                    System.IO.File.Delete(ServerSavePath);
-                                    file.SaveAs(ServerSavePath);
-                                    st.IsPhotoUpload = true;
-                                    st.Photo = filename;
-                                    db.Entry(st).State = EntityState.Modified;
-                                    db.SaveChanges();
-
-                                }
-                                else
-                                {
-                                    TempData["errormsg"] = "You must select an image file only.";
-                                    return RedirectToAction("UploadPhoto");
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                TempData["errormsg"] = e.Message;
-                                return RedirectToAction("UploadPhoto");
-                            }
-                        }
-                    }
-                    else
-                    {
-                      
-                        Directory.CreateDirectory(dirPath);
-                        using (ZipFile zip1 = ZipFile.Read("D:\\system_format\\pic.zip"))
-                        {
-                            var selection = (from e in zip1.Entries
-                                             select e);
-                            foreach (var e in selection)
-                            {
-
-                                e.Extract(dirPath);
-                            }
-                        }
-
-                        DirectoryInfo Folder;
-                        FileInfo[] images;
-                        Folder =new DirectoryInfo(dirPath+"/"+file.FileName.Replace(".zip","").Trim());
-                        images = Folder.GetFiles();
-                        for (int i = 0; i < images.Length; i++)
-                        {
-                            var st = db.Students.Where(x => x.StSchool_SchoolId == student.StSchool_SchoolId && x.Session == student.session && x.Excel_Photo == images[i].Name).FirstOrDefault();
-
-                            if (st!=null)
-                            {
-                                var msg = "";
-
-                                try
-                                {
-                                    var sizeinbyte = images[i].Length;
-
-                                    var sizeinkb = (sizeinbyte) / (1024);
-                                    if (sizeinkb > 500)
-                                    {
-                                        TempData["errormsg"] = "Photo Size should not be greator than 500 kb..!";
-                                        return RedirectToAction("Index");
-                                    }
-                                    else if (extension == ".png" || extension == ".jpg" || extension == ".jpeg")
-                                    {
-
-                                        var filename = st.AdmNo + st.Session + st.School.SchoolCode + images[i].Extension;
-
-                                        var ServerSavePath = Path.Combine(Server.MapPath("~/uploads/"), filename);
-                                        System.IO.File.Delete(ServerSavePath);
-                                        file.SaveAs(ServerSavePath);
-                                        st.IsPhotoUpload = true;
-                                        st.Photo = filename;
-                                        db.Entry(st).State = EntityState.Modified;
-                                        db.SaveChanges();
-                                        TempData["smsg"] = "success";
-
-                                    }
-                                    else
-                                    {
-                                        TempData["errormsg"] = "You must select an image file only.";
-                                        return RedirectToAction("UploadPhoto");
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    TempData["errormsg"] = e.Message;
-                                    return RedirectToAction("UploadPhoto");
-                                }
-
-                            }
-                        }
-
-                        var query = Directory.GetFiles(dirPath + "/" + file.FileName.Replace(".zip", "").Trim());
-                        foreach (var item in query)
-                        {
-                            Directory.Delete(item);
-                        }
-                        Directory.Delete(dirPath);
-
-
-
-                    }
-                }
-            }
-
-            int customerid = (int)Session["customerid"];
-            ViewBag.StSchool_SchoolId = new SelectList(db.Schools.Where(x => x.CustomerId == customerid).ToList(), "SchoolId", "SchoolName");
-            WebApplication1.Models.BulkImage st1 = new Models.BulkImage();
-            st1.session = "2022-2023";
-            return View(st1);
-        }
+       
+        
 
         [HttpPost]
         [AutorizeUser]

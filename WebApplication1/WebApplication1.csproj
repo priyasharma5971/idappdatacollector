@@ -266,9 +266,9 @@
     <Compile Include="LinqToTable.cs" />
     <Compile Include="Model1.Context.cs" />
     <Compile Include="Model12.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Model12.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -278,6 +278,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BulkImage.cs" />
     <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="ParentLogin.cs">
@@ -2821,28 +2822,20 @@
     <Content Include="Scripts\react\react-with-addons.min.js" />
     <Content Include="Scripts\react\react.js" />
     <Content Include="Scripts\react\react.min.js" />
-    <Content Include="uploads\112022-20236.png" />
-    <Content Include="uploads\12022-2023123.jpeg" />
-    <Content Include="uploads\12022-2023123.jpg" />
-    <Content Include="uploads\12022-2023123.png" />
-    <Content Include="uploads\12022-20231234.jpg" />
-    <Content Include="uploads\12022-20236.png" />
-    <Content Include="uploads\12022-2023System.Data.Entity.DynamicProxies.School_B323E98128104559D43B10D174E8727BF28465BF206B6B5B0975862ABFC4AF7A.jpg" />
-    <Content Include="uploads\12042023-202412.jpg" />
-    <Content Include="uploads\19522023-202412.jpg" />
-    <Content Include="uploads\19552023-202412.jpg" />
-    <Content Include="uploads\19562023-2024123.jpg" />
-    <Content Include="uploads\19572022-202312.jpg" />
-    <Content Include="uploads\22022-2023123.jpeg" />
-    <Content Include="uploads\22022-2023123.jpg" />
-    <Content Include="uploads\22022-2023123.png" />
-    <Content Include="uploads\22022-20231234.png" />
-    <Content Include="uploads\22022-20236.png" />
-    <Content Include="uploads\22022-2023System.Data.Entity.DynamicProxies.School_B323E98128104559D43B10D174E8727BF28465BF206B6B5B0975862ABFC4AF7A.png" />
-    <Content Include="uploads\42022-20236.jpg" />
-    <Content Include="uploads\52022-2023123.jpeg" />
-    <Content Include="uploads\52022-2023123.png" />
-    <Content Include="uploads\images.jpg" />
+    <Content Include="uploads\121422023-20249451753420.jpg" />
+    <Content Include="uploads\121472023-20249451753420.jpg" />
+    <Content Include="uploads\121542023-20249451753420.jpg" />
+    <Content Include="uploads\121642023-202443241 .jpg" />
+    <Content Include="uploads\121672023-20249451753420.jpg" />
+    <Content Include="uploads\121712023-20249451753420.jpg" />
+    <Content Include="uploads\121722023-202443241 .jpg" />
+    <Content Include="uploads\121802023-202443241 .jpg" />
+    <Content Include="uploads\121842023-20249451753420.jpg" />
+    <Content Include="uploads\121862023-202443241 .jpg" />
+    <Content Include="uploads\121892023-20241850.jpg" />
+    <Content Include="uploads\121902023-202443241 .jpg" />
+    <Content Include="uploads\121932023-20249451753420.jpg" />
+    <Content Include="uploads\121972023-20241850.jpg" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -2936,9 +2929,6 @@
     <Content Include="Views\StoreAPKs\Index.cshtml" />
     <Content Include="Web.config" />
     <Content Include="test data.xlsx" />
-    <Content Include="uploads\app-debug.apk" />
-    <Content Include="uploads\importexcel.xlsx" />
-    <Content Include="uploads\test data.xlsx" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2949,9 +2939,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ExcelWorks\" />
-    <Folder Include="NewFolder1\" />
     <Folder Include="plugins\flot-charts\examples\gauge\" />
     <Folder Include="Views\Test\" />
+    <Folder Include="zipfile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

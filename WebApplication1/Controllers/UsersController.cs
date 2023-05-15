@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebApplication1;
 using static WebApplication1.Models.Class1;
+using System.Globalization;
 
 namespace WebApplication1.Controllers
 {
@@ -22,7 +23,22 @@ namespace WebApplication1.Controllers
         public ActionResult Index()
         {
             ViewBag.userlist = db.Users.ToList();
+            ViewBag.schoollist = db.Schools.ToList();
+            ViewBag.studentlist = db.Students.ToList();
             return View(db.Customers.ToList().OrderByDescending(X=>X.CustomerId));
+
+
+
+          
+            //var a = (from m in db.Schools.ToList()
+            //         join c in db.Customers on m.CustomerId equals c.CustomerId
+            //         join s in db.Students on m.SchoolId equals s.StSchool_SchoolId
+            //         select new Customer
+            //         {
+            //             size = s.Size,
+            //            CustomerId=m.CustomerId,
+            //         }).ToList();
+
 
         }
 
@@ -87,10 +103,10 @@ namespace WebApplication1.Controllers
         [AutorizeUser]
         public ActionResult Create()
         {
-            Customer cs = new Customer();
-            cs.EnteredOnDate = DateTime.Today;
-            cs.ValidFrom = DateTime.Today;
-            cs.ValidTill = DateTime.Today.AddYears(1);
+            Models.Customer cs = new Models.Customer();
+            cs.EnteredOnDate = DateTime.Today.ToString("dd-MM-yyyy");
+            cs.ValidFrom = DateTime.Today.ToString("dd-MM-yyyy"); 
+            cs.ValidTill = DateTime.Today.AddYears(1).ToString("dd-MM-yyyy");
             var q = db.Dealers.ToList();
             ViewBag.dealerid = new SelectList(q, "id", "name");
             return View(cs);
@@ -100,20 +116,56 @@ namespace WebApplication1.Controllers
         [HttpPost]
       
         [AutorizeUser]
-        public ActionResult Create([Bind(Include = "CustomerId,CustName,IsValid,ValidTill,EnteredOnDate,ValidFrom,CustAddress,ContactNo,Email,CustCode,UpdatedOn,UpdatedBy,password,dealerid,dealerprice,customerprice")] Customer customer)
+        public ActionResult Create(Models.Customer customer)
         {
-            if (ModelState.IsValid)
-            {
-                customer.UpdatedOn = DateTime.Today;
-                db.Customers.Add(customer);
-                db.SaveChanges();
+            string data = "";
+            data = customer.ValidFrom.ToString() + " " + customer.ValidTill.ToString();
+            DateTime vf, vt;
+            
+                if (ModelState.IsValid)
+                {
+                    Customer CS = new Customer();
+                    CS.ValidFrom = ConvertToDate(customer.ValidFrom);
+                    CS.ValidTill = ConvertToDate(customer.ValidTill);
+                    CS.EnteredOnDate = DateTime.Today;
+                    CS.UpdatedOn = DateTime.Today;
+                    CS.ContactNo = customer.ContactNo;
+                    CS.CustName = customer.CustName;
+                    CS.CustAddress = customer.CustAddress;
+                    CS.CustCode = customer.CustCode;
+                    CS.customerprice = customer.customerprice;
+                    CS.dealerprice = customer.dealerprice;
+                    CS.dealerid = customer.dealerid;
+                    CS.IsValid = customer.IsValid;
+                    CS.password = customer.password;
+                    CS.Email = customer.Email;
+                   
+                    db.Customers.Add(CS);
+                    db.SaveChanges();
                 return RedirectToAction("Index");
+
+
             }
 
-            return View(customer);
+            return RedirectToAction("Index");
+           
         }
 
-        // GET: Customers/Edit/5
+
+
+        DateTime ConvertToDate(string date)
+        {
+            DateTime cdate;
+            date = date.Trim();
+            if (date.Length != 10)
+                throw new Exception("Invalid Date");
+                //return Convert.ToDateTime("01/Jan/1900");
+            string day=date.Substring(0,2), month=date.Substring(3,2), year=date.Substring(6,4);
+            cdate = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day));
+            return cdate;
+
+        }
+         //GET: Customers/Edit/5
         [AutorizeUser]
         public ActionResult Edit(int? id)
         {
@@ -122,26 +174,60 @@ namespace WebApplication1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Customer customer = db.Customers.Find(id);
+            Models.Customer CS = new Models.Customer();
+            CS.ValidFrom =customer.ValidFrom.ToString("dd/MM/yyyy");
+            CS.ValidTill =customer.ValidTill.ToString("dd/MM/yyyy");
+            CS.EnteredOnDate = DateTime.Today.ToString("dd/MM/yyyy");
+            //CS.UpdatedOn = DateTime.Today.ToString("dd/MM/yyyy");
+            CS.ContactNo = customer.ContactNo;
+            CS.CustName = customer.CustName;
+            CS.CustAddress = customer.CustAddress;
+            CS.CustCode = customer.CustCode;
+            CS.customerprice = customer.customerprice;
+            CS.dealerprice = customer.dealerprice;
+            CS.dealerid = customer.dealerid;
+            CS.IsValid = customer.IsValid;
+            CS.password = customer.password;
+            CS.Email = customer.Email;
+            CS.CustomerId = customer.CustomerId;
             if (customer == null)
             {
                 return HttpNotFound();
             }
             var q = db.Dealers.Where(x=>x.id==customer.dealerid).ToList();
             ViewBag.dealerid = new SelectList(q, "id", "name");
-            return View(customer);
+           
+            return View(CS);
         }
 
         // POST: Customers/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [AutorizeUser]
-        public ActionResult Edit([Bind(Include = "CustomerId,CustName,IsValid,ValidTill,EnteredOnDate,ValidFrom,CustAddress,ContactNo,Email,CustCode,UpdatedOn,UpdatedBy,password,dealerid,dealerprice,customerprice")] Customer customer)
+        public ActionResult Edit(Models.Customer customer)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(customer).State = EntityState.Modified;
+                Customer CS = db.Customers.Where(x=>x.CustomerId==customer.CustomerId).FirstOrDefault();
+
+                //throw new Exception(customer.ValidFrom+","+customer.ValidTill);
+                CS.ValidFrom = ConvertToDate(customer.ValidFrom);
+                CS.ValidTill = ConvertToDate(customer.ValidTill);
+                //CS.EnteredOnDate = DateTime.Today;
+                CS.UpdatedOn = DateTime.Today;
+                CS.ContactNo = customer.ContactNo;
+                CS.CustName = customer.CustName;
+                CS.CustAddress = customer.CustAddress;
+                CS.CustCode = customer.CustCode;
+                CS.customerprice = customer.customerprice;
+                CS.dealerprice = customer.dealerprice;
+                CS.dealerid = customer.dealerid;
+                CS.IsValid = customer.IsValid;
+                CS.password = customer.password;
+                CS.Email = customer.Email;
+
+                db.Entry(CS).State = EntityState.Modified;
                 db.SaveChanges();
                 var q = db.Dealers.Where(x => x.id == customer.dealerid).ToList();
                 ViewBag.dealerid = new SelectList(q, "id", "name");

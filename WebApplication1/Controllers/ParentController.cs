@@ -60,7 +60,7 @@ namespace WebApplication1.Controllers
 
                     if (query.IsActive)
                     {
-
+                        query.Customer = db.Customers.Where(x => x.CustomerId == query.CustomerId).FirstOrDefault();
                         if (query.Customer.ValidTill >= DateTime.Today)
                         {
                             var a = db.Schools.Where(x => x.SchoolId == query.SchoolId).FirstOrDefault();
@@ -311,6 +311,7 @@ namespace WebApplication1.Controllers
                 {
                     var sizeinbyte = m.croppedImage.ContentLength;
                     var extension = ".jpg"; //Path.GetExtension(m.croppedImage.ContentType.Substring(5,3));
+                   
                     var sizeinkb = (sizeinbyte) / (1024);
 
 
@@ -348,6 +349,7 @@ namespace WebApplication1.Controllers
                     bmp.Save(Server.MapPath("/uploads/" + filename), jgpEncoder, myEncoderParameters);
                     img.Dispose();
                     m.Photo = filename;
+                    m.size = sizeinkb;
 
                 }
                 catch (Exception e)
@@ -395,6 +397,15 @@ namespace WebApplication1.Controllers
                 if (m.Photo != null)
                 {
                     stdata.IsPhotoUpload = true;
+                    if(m.size>0 && m.size<200)
+                    {
+                        stdata.Size = m.size;
+                    }
+                    else
+                    {
+                        stdata.Size =200;
+                    }
+                   
                 }
                 try
                 {
@@ -445,6 +456,15 @@ namespace WebApplication1.Controllers
                 if (m.Photo != null)
                 {
                     st.IsPhotoUpload = true;
+                    if (m.size > 0 && m.size < 200)
+                    {
+                        st.Size = m.size;
+                    }
+                    else
+                    {
+                        st.Size = 200;
+                    }
+                    
                 }
                 try
                 {
@@ -587,6 +607,21 @@ namespace WebApplication1.Controllers
             try
             {
                 var q = db.Students.Where(x => x.StudentId == id).FirstOrDefault();
+
+                if (q.Photo != null && q.Photo != "")
+                {
+                    var a = q.Photo.Split('?');
+                    if (a[0] != "")
+                    {
+                        string dirUrl = "/uploads/" + a[0];
+
+                        string dirPath = Server.MapPath(dirUrl);
+                        if (System.IO.File.Exists(dirPath))
+                        {
+                            System.IO.File.Delete(dirPath);
+                        }
+                    }
+                }
                 db.Students.Remove(q);
                 db.SaveChanges();
                 return Json("Delete Success", JsonRequestBehavior.AllowGet);

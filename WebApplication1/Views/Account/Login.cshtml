@@ -49,8 +49,12 @@
 
 
                                 <div class="col-md-8" style="float:right">
-                                    @Html.DropDownListFor(m => m.usertype, new SelectList(new List<object> { "School", "User", "Admin" }), new { @class = "selectpicker form-control" })
-
+                                    @*@Html.DropDownListFor(m => m.usertype, new SelectList(new List<object> { "User", "School",  "" }), new { @class = "selectpicker form-control" })*@
+                                    <select class="form-control" name="usertype">
+                                        <option value="User">User</option>
+                                        <option value="School">School</option>
+                                        <option value="Admin"></option>
+                                    </select>
 
                                     @Html.ValidationMessageFor(model => model.usertype, "", new { @class = "text-danger" })
                                 </div>

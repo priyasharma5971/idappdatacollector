@@ -133,6 +133,7 @@
           <Property Name="house" Type="nchar" MaxLength="10" />
           <Property Name="emergency_no" Type="bigint" />
           <Property Name="bloodgroup" Type="varchar" MaxLength="5" />
+          <Property Name="Size" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -210,28 +211,6 @@
           <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="CustomerId" />
-          </Key>
-          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsValid" Type="Boolean" Nullable="false" />
-          <Property Name="ValidTill" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EnteredOnDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ValidFrom" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CustAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ContactNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CustCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UpdatedBy" Type="Int32" />
-          <NavigationProperty Name="Schools" Relationship="Self.FK_dbo_Schools_dbo_Customers_CustomerId" FromRole="Customers" ToRole="Schools" />
-          <Property Name="password" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="dealerid" Type="Int32" Nullable="false" />
-          <Property Name="dealerprice" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="customerprice" Type="Decimal" Precision="9" Scale="2" />
-        </EntityType>
         <EntityType Name="School">
           <Key>
             <PropertyRef Name="SchoolId" />
@@ -249,7 +228,6 @@
           <Property Name="IsActive" Nullable="false" Type="Boolean" />
           <Property Name="UpdatedOn" Nullable="false" Precision="3" Type="DateTime" />
           <Property Name="CustomerId" Nullable="false" Type="Int32" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_dbo_Schools_dbo_Customers_CustomerId" FromRole="Schools" ToRole="Customers" />
           <Property Name="updatedby" Type="Int32" />
           <Property Name="password" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
@@ -264,29 +242,10 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <Association Name="FK_dbo_Schools_dbo_Customers_CustomerId">
-          <End Type="Self.Customer" Multiplicity="1" Role="Customers">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="Self.School" Multiplicity="*" Role="Schools" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="Schools">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="IdCardDataManagerEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Schools" EntityType="Self.School" />
           <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_dbo_Schools_dbo_Customers_CustomerId" Association="Self.FK_dbo_Schools_dbo_Customers_CustomerId">
-            <End EntitySet="Customers" Role="Customers" />
-            <End EntitySet="Schools" Role="Schools" />
-          </AssociationSet>
           <EntitySet Name="softwareoptions" EntityType="IdCardDataManagerModel.softwareoption" />
           <EntitySet Name="ParentLogins" EntityType="IdCardDataManagerModel.ParentLogin" />
           <EntitySet Name="Students" EntityType="IdCardDataManagerModel.Student" />
@@ -294,6 +253,7 @@
           <EntitySet Name="renewals" EntityType="IdCardDataManagerModel.renewal" />
           <EntitySet Name="StoreAPKs" EntityType="IdCardDataManagerModel.StoreAPK" />
           <EntitySet Name="session_master" EntityType="IdCardDataManagerModel.session_master" />
+          <EntitySet Name="Customers" EntityType="IdCardDataManagerModel.Customer" />
         </EntityContainer>
         <EntityType Name="softwareoption">
           <Key>
@@ -372,6 +332,7 @@
           <Property Name="house" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="emergency_no" Type="Int64" />
           <Property Name="bloodgroup" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Size" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Dealer">
           <Key>
@@ -411,6 +372,27 @@
           <Property Name="session" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="isactive" Type="Boolean" Nullable="false" />
         </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsValid" Type="Boolean" Nullable="false" />
+          <Property Name="ValidTill" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EnteredOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ValidFrom" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CustAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="password" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="dealerid" Type="Int32" Nullable="false" />
+          <Property Name="dealerprice" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="customerprice" Type="Decimal" Precision="9" Scale="2" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -424,28 +406,6 @@
                 <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
                 <ScalarProperty Name="Model" ColumnName="Model" />
                 <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="IdCardDataManagerModel.Customer">
-              <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="customerprice" ColumnName="customerprice" />
-                <ScalarProperty Name="dealerprice" ColumnName="dealerprice" />
-                <ScalarProperty Name="dealerid" ColumnName="dealerid" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="CustName" ColumnName="CustName" />
-                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
-                <ScalarProperty Name="ValidTill" ColumnName="ValidTill" />
-                <ScalarProperty Name="EnteredOnDate" ColumnName="EnteredOnDate" />
-                <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
-                <ScalarProperty Name="CustAddress" ColumnName="CustAddress" />
-                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="CustCode" ColumnName="CustCode" />
-                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -527,6 +487,7 @@
           <EntitySetMapping Name="Students">
             <EntityTypeMapping TypeName="IdCardDataManagerModel.Student">
               <MappingFragment StoreEntitySet="Students">
+                <ScalarProperty Name="Size" ColumnName="Size" />
                 <ScalarProperty Name="bloodgroup" ColumnName="bloodgroup" />
                 <ScalarProperty Name="emergency_no" ColumnName="emergency_no" />
                 <ScalarProperty Name="house" ColumnName="house" />
@@ -602,6 +563,28 @@
                 <ScalarProperty Name="isactive" ColumnName="isactive" />
                 <ScalarProperty Name="session" ColumnName="session" />
                 <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="IdCardDataManagerModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="customerprice" ColumnName="customerprice" />
+                <ScalarProperty Name="dealerprice" ColumnName="dealerprice" />
+                <ScalarProperty Name="dealerid" ColumnName="dealerid" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="CustAddress" ColumnName="CustAddress" />
+                <ScalarProperty Name="ValidFrom" ColumnName="ValidFrom" />
+                <ScalarProperty Name="EnteredOnDate" ColumnName="EnteredOnDate" />
+                <ScalarProperty Name="ValidTill" ColumnName="ValidTill" />
+                <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

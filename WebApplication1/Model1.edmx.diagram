@@ -6,10 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="869528fcf15e43709997730783e923fe" Name="Diagram1">
         <EntityTypeShape EntityType="IdCardDataManagerModel.C__MigrationHistory" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="IdCardDataManagerModel.Customer" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
         <EntityTypeShape EntityType="IdCardDataManagerModel.School" PointX="3.125" PointY="3.375" Width="1.5" IsExpanded="true" />
         <EntityTypeShape EntityType="IdCardDataManagerModel.User" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <AssociationConnector ManuallyRouted="false" Association="IdCardDataManagerModel.FK_dbo_Schools_dbo_Customers_CustomerId" />
         <EntityTypeShape EntityType="IdCardDataManagerModel.softwareoption" Width="1.5" PointX="7.375" PointY="3.75" />
         <EntityTypeShape EntityType="IdCardDataManagerModel.ParentLogin" Width="1.5" PointX="3.375" PointY="8.75" />
         <EntityTypeShape EntityType="IdCardDataManagerModel.Student" Width="1.5" PointX="5.375" PointY="8.75" />
@@ -17,6 +15,7 @@
         <EntityTypeShape EntityType="IdCardDataManagerModel.renewal" Width="1.5" PointX="0.75" PointY="9.75" />
         <EntityTypeShape EntityType="IdCardDataManagerModel.StoreAPK" Width="1.5" PointX="9.375" PointY="3.75" />
         <EntityTypeShape EntityType="IdCardDataManagerModel.session_master" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="IdCardDataManagerModel.Customer" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

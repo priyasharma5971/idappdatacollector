@@ -129,7 +129,7 @@ namespace WebApplication1.Controllers
                     if (query.IsActive)
                     {
 
-
+                        query.Customer = db.Customers.Where(x => x.CustomerId == query.CustomerId).FirstOrDefault();
                         if (query.Customer.ValidTill >= DateTime.Today)
                         {
                             if (query.SchoolId > 0)

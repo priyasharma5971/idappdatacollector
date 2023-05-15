@@ -48,8 +48,9 @@ namespace WebApplication1
         public string house { get; set; }
         public Nullable<long> emergency_no { get; set; }
         public string bloodgroup { get; set; }
+        public int Size { get; set; }
         public HttpPostedFileBase PhotoUpload { get; set; }
-        public School School { get; set; }
         public List<session_master> sessionlist { get; set; }
+        public virtual School School { get; set; }
     }
 }

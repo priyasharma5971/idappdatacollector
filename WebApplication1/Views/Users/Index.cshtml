@@ -7,6 +7,8 @@
 
 @{ 
     var q= ViewBag.userlist;
+    List <Student>st  = ViewBag.studentlist;
+    List<School> s = ViewBag.schoollist;
 }
 
 <!DOCTYPE html>
@@ -20,7 +22,9 @@
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
-    <table class="table table-responsive  table-bordered table-striped"  >
+  
+    <h6>Total: @Model.Count()</h6>
+    <table class="table table-responsive  table-bordered table-striped">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.EnteredOnDate)
@@ -56,11 +60,12 @@
             </th>
 
             @*<th>
-            @Html.DisplayNameFor(model => model.UpdatedOn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdatedBy)
-        </th>*@
+                    @Html.DisplayNameFor(model => model.UpdatedOn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UpdatedBy)
+                </th>*@
+            <th>Size</th>
             <th></th>
         </tr>
         @if (Model != null)
@@ -68,81 +73,90 @@
 
             foreach (var item in Model)
             {
-        <tr>
-            <td>
-                @item.EnteredOnDate.ToShortDateString()
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsValid)
-            </td>
+                int i = 0;
+                <tr>
+                    <td>
+                        @item.EnteredOnDate.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsValid)
+                    </td>
 
 
-            <td>
-                @item.ValidFrom.ToShortDateString()
-            </td>
-            <td>
-                @item.ValidTill.ToShortDateString()
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CustCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.password)
-            </td>
-            @*<td>
-            @Html.DisplayFor(modelItem => item.UpdatedOn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdatedBy)
-        </td>*@
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }) |
-                @*@Html.ActionLink("Details", "Details", new { id = item.CustomerId }) |*@
-                @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId }, new { onclick = "return confirm('Are you sure you wish to delete this?');" })
-               @Html.ActionLink("Renew", "Renew", new { id = item.CustomerId }) |
-            </td>
-        </tr>
+                    <td>
+                        @item.ValidFrom.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @item.ValidTill.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.password)
+                    </td>
+
+                    <td>
+                        @foreach (var item1 in s.Where(x => x.CustomerId == item.CustomerId).ToList())
+                        {
+                            foreach (var item2 in st.Where(x => x.StSchool_SchoolId == item1.SchoolId).ToList())
+                            {
+                                i += item2.Size;
+                            }
+                        }
+                        @i
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.UpdatedBy)
+                        </td>*@
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CustomerId }) |
+                        @*@Html.ActionLink("Details", "Details", new { id = item.CustomerId }) |*@
+                        @Html.ActionLink("Delete", "Delete", new { id = item.CustomerId }, new { onclick = "return confirm('Are you sure you wish to delete this?');" })
+                        @Html.ActionLink("Renew", "Renew", new { id = item.CustomerId }) |
+                    </td>
+                </tr>
             }
         }
 
 
-       
+
     </table>
     @*<table class="table table-responsive  table-bordered table-striped" >
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Password</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                @using (Html.BeginForm())
-                {
-
-                    foreach (var item in q)
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Password</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @using (Html.BeginForm())
                     {
-                        <td>@item.LoginName</td>
-                        <td><input value="@item.Password" type="password" class="form-control" /></td>
 
-                        <td><button type="submit" formaction="~/Users/cpass?id=@item.UserId&pass=@item.Password">Change Password</button></td>
+                        foreach (var item in q)
+                        {
+                            <td>@item.LoginName</td>
+                            <td><input value="@item.Password" type="password" class="form-control" /></td>
+
+                            <td><button type="submit" formaction="~/Users/cpass?id=@item.UserId&pass=@item.Password">Change Password</button></td>
+                        }
                     }
-                }
-            </tr>
-        </tbody>
-    </table>*@
+                </tr>
+            </tbody>
+        </table>*@
 </body>
 </html>

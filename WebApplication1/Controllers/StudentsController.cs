@@ -188,6 +188,7 @@ namespace WebApplication1.Controllers
                             student.PhotoUpload.SaveAs(ServerSavePath);
                             student.Photo = filename;
                             student.IsPhotoUpload = true;
+                            student.Size = sizeinkb;
                         }
                         else
                         {
@@ -295,7 +296,8 @@ namespace WebApplication1.Controllers
                             student.PhotoUpload.SaveAs(ServerSavePath);
                             student.Photo = filename;
                             student.IsPhotoUpload = true;
-                            }
+                            student.Size = sizeinkb;
+                        }
                             else
                             {
                             TempData["errormsg"] = "You must select an image file only.";
@@ -405,6 +407,21 @@ namespace WebApplication1.Controllers
         public ActionResult Delete(int? id)
         {
             Student student = db.Students.Find(id);
+            if (student.Photo != null && student.Photo != "")
+            {
+                var a = student.Photo.Split('?');
+                if (a[0] != "")
+                {
+                    string dirUrl = "/uploads/" + a[0];
+
+                    //string dirUrl = "/uploads/" + student.Photo;
+                    string dirPath = Server.MapPath(dirUrl);
+                    if (System.IO.File.Exists(dirPath))
+                    {
+                        System.IO.File.Delete(dirPath);
+                    }
+                }
+            }
             db.Students.Remove(student);
             db.SaveChanges();
             TempData["smsg"] = "success";
@@ -488,7 +505,8 @@ namespace WebApplication1.Controllers
                     Student stud = new Student();
                     stud.Address = (Convert.IsDBNull(dr["address"]) ? "" : dr["address"].ToString());
                     stud.AdmNo = (Convert.IsDBNull(dr["admno"]) ? "" : dr["admno"].ToString());
-                    stud.rollno = Convert.IsDBNull(dr["rollno"]).ToString();
+                    stud.rollno = (Convert.IsDBNull(dr["rollno"]) ? "" : dr["rollno"].ToString());
+
 
                     stud.AllCorrect = false;
                     stud.ClassName = (Convert.IsDBNull(dr["Class"]) ? "" : dr["Class"].ToString());

@@ -1,4 +1,4 @@
-﻿@model WebApplication1.Customer
+﻿@model WebApplication1.Models.Customer
 
 @{
     Layout = null;
@@ -105,7 +105,7 @@
             </div>
         </div>
 
-        <div class="form-group" hidden>
+        @*<div class="form-group" hidden>
             @Html.LabelFor(model => model.UpdatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UpdatedOn, new { htmlAttributes = new { @class = "form-control" } })
@@ -119,7 +119,7 @@
                 @Html.EditorFor(model => model.UpdatedBy, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.UpdatedBy, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
         <div class="form-group">
             Dealer
             <div class="col-md-10">

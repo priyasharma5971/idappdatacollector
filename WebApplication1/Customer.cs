@@ -14,12 +14,6 @@ namespace WebApplication1
     
     public partial class Customer
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customer()
-        {
-            this.Schools = new HashSet<School>();
-        }
-    
         public int CustomerId { get; set; }
         public string CustName { get; set; }
         public bool IsValid { get; set; }
@@ -36,8 +30,5 @@ namespace WebApplication1
         public int dealerid { get; set; }
         public Nullable<decimal> dealerprice { get; set; }
         public Nullable<decimal> customerprice { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<School> Schools { get; set; }
     }
 }
